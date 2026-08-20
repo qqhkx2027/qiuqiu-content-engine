@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type Status = "选题中" | "制作中" | "待发布" | "已发布";
 type Platform = "公众号" | "小红书" | "抖音";
@@ -56,6 +56,19 @@ export default function Home() {
   const [draftTime, setDraftTime] = useState("10:00");
   const [toast, setToast] = useState("");
 
+  useEffect(() => {
+    let disposed = false;
+    fetch("/api/schedule")
+      .then((response) => response.ok ? response.json() : Promise.reject(new Error("schedule request failed")))
+      .then((data: ContentCard[]) => {
+        if (!disposed && Array.isArray(data)) setCards(data);
+      })
+      .catch(() => {
+        if (!disposed) showToast("排期读取失败，当前显示的是临时数据");
+      });
+    return () => { disposed = true; };
+  }, []);
+
   const filteredHistory = useMemo(() => {
     if (!query.trim()) return history;
     return history.filter((item) => item.join(" ").toLowerCase().includes(query.toLowerCase()));
@@ -77,20 +90,27 @@ export default function Home() {
     setShowComposer(true);
   }
 
-  function moveCard(id: number) {
-    setCards((current) => current.map((card) => {
-      if (card.id !== id) return card;
-      const next = statusOrder[(statusOrder.indexOf(card.status) + 1) % statusOrder.length];
-      return { ...card, status: next };
-    }));
-    showToast("内容状态已更新");
+  async function moveCard(id: number) {
+    const currentCard = cards.find((card) => card.id === id);
+    if (!currentCard) return;
+    const next = statusOrder[(statusOrder.indexOf(currentCard.status) + 1) % statusOrder.length];
+    setCards((current) => current.map((card) => card.id === id ? { ...card, status: next } : card));
+    try {
+      const response = await fetch("/api/schedule", { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify({ id, status: next }) });
+      if (!response.ok) throw new Error("status update failed");
+      showToast("内容状态已更新");
+    } catch {
+      setCards((current) => current.map((card) => card.id === id ? currentCard : card));
+      showToast("状态同步失败，请重试");
+    }
   }
 
-  function addIdea() {
+  async function addIdea() {
     if (!draft.trim()) return;
     const meta = platformMeta(draftPlatform);
-    setCards((current) => [...current, {
-      id: Date.now(),
+    const temporaryId = Date.now();
+    const newCard: ContentCard = {
+      id: temporaryId,
       title: draft.trim(),
       pillar: "待归类",
       status: "选题中",
@@ -99,10 +119,20 @@ export default function Home() {
       platform: draftPlatform,
       owner: "秋",
       color: meta.color === "wechat" ? "purple" : meta.color === "xiaohongshu" ? "yellow" : "pink",
-    }]);
+    };
+    setCards((current) => [...current, newCard]);
     setDraft("");
     setShowComposer(false);
-    showToast(`${draftPlatform}排期已加入`);
+    try {
+      const response = await fetch("/api/schedule", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(newCard) });
+      if (!response.ok) throw new Error("schedule save failed");
+      const saved = await response.json() as ContentCard;
+      setCards((current) => current.map((card) => card.id === temporaryId ? saved : card));
+      showToast(`${draftPlatform}排期已保存`);
+    } catch {
+      setCards((current) => current.filter((card) => card.id !== temporaryId));
+      showToast("排期保存失败，请重试");
+    }
   }
 
   function selectNav(item: string) {
