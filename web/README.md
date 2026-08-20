@@ -1,4 +1,4 @@
-# vinext-starter
+# 秋秋内容引擎
 
 A clean full-stack starter running on
 [vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
@@ -16,7 +16,9 @@ npm run dev
 npm run build
 ```
 
-This starter does not use `wrangler.jsonc`.
+The dashboard is protected by a simple private username/password login. The
+values are provided through the hosted site's `AUTH_USERNAME`, `AUTH_PASSWORD`,
+and `AUTH_SECRET` environment variables and are never committed to the repo.
 
 ## Included Shape
 
