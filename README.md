@@ -26,3 +26,21 @@ cd 05-Agents/qiuqiu-content-engine
 ```
 
 索引数据位于 `data/chroma/`，已加入 `.gitignore`，不提交到仓库。
+
+## 个人网站（GitHub Pages）
+
+`docs/` 目录是秋秋个人网站的静态产物（502 篇文章，文章页自动跳转公众号原文）。
+线上地址：https://qqhkx2027.github.io/qiuqiu-content-engine/
+
+### 更新站点
+```bash
+# 1. 在 content/公众号/ 里更新文章 md
+# 2. 重新生成元数据索引（输出到 content/公众号/outputs/，不入库）
+python content/公众号/outputs/extract_articles.py
+# 3. 构建站点到 docs/
+(cd site && node build3.mjs)
+(cd site && node make_topics.mjs)
+(cd site && node build_extra.mjs)
+(cd site && node linkcheck.mjs)
+
+构建后提交 docs/ 即可，GitHub Pages 托管 docs/ 目录。
