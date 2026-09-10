@@ -20,7 +20,8 @@ const TOPICS = [
 const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const home = fs.readFileSync(path.join(OUT, 'index.html'), 'utf8');
 const css = home.match(/<style>([\s\S]*?)<\/style>/)[1];
-const header = home.match(/<header>[\s\S]*?<\/header>/)[0];
+const skyMatch = home.match(/<div class="sky">[\s\S]*?<\/header>/);
+const header = skyMatch ? skyMatch[0] : home.match(/<header>[\s\S]*?<\/header>/)[0];
 const footer = home.match(/<footer>[\s\S]*?<\/footer>/)[0];
 const hero = '<div class="hero"><h1>按主题浏览</h1><p class="tagline">换个方式，看秋秋写了什么</p></div>';
 const missing = {};

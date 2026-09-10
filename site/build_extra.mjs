@@ -22,7 +22,8 @@ const PAGES = ['index.html','topics.html','archive.html','about.html','404.html'
 const POSTS = fs.readdirSync(path.join(OUT,'post')).filter(f=>f.endsWith('.html'));
 // 先生成 search.html（基于首页模板）
 const home = fs.readFileSync(path.join(OUT, 'index.html'), 'utf8');
-const header = home.match(/<header>[\s\S]*?<\/header>/)[0];
+const skyMatch = home.match(/<div class="sky">[\s\S]*?<\/header>/);
+const header = skyMatch ? skyMatch[0] : home.match(/<header>[\s\S]*?<\/header>/)[0];
 const footer = home.match(/<footer>[\s\S]*?<\/footer>/)[0];
 const cssBlock = home.match(/<style>[\s\S]*?<\/style>/)[0];
 const searchHtml = '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>搜索 · 秋秋很开心</title><meta name="description" content="搜索秋秋的公众号历史文章">' + cssBlock.replace('</style>', EXTRA_CSS + '</style>') + '<link rel="icon" href="favicon.svg" type="image/svg+xml"></head><body>' + header.replace('<a href="about.html">关于</a>', '<a href="about.html">关于</a><a href="search.html">搜索</a>') + '<main class="wrap"><h2 class="year-head">搜索文章</h2><div class="searchbar"><input id="sq" type="search" placeholder="搜索标题、标签、账号、日期…" autofocus></div><div id="results"><p class="search-hint">加载中…</p></div><script src="search.js"></' + 'script></main>' + footer + '</body></html>';

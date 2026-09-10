@@ -1,5 +1,7 @@
- import fs from 'node:fs';
- import path from 'node:path';
+import fs from 'node:fs';
+import path from 'node:path';
+import { GHIBLI_CSS, GHIBLI_SKY, GHIBLI_FOOTER } from './theme.mjs';
+import { ATOMS_EXTRA } from './theme_extra.mjs';
  const DATA = path.join(import.meta.dirname, '..', 'content/公众号/outputs/articles_data.json');
  const OUT = path.join(import.meta.dirname, '..', 'docs');
  const raw = JSON.parse(fs.readFileSync(DATA, 'utf8'));
@@ -60,10 +62,10 @@
  const topics = [...topicMap.values()].filter(t => t.count >= 6).sort((a, b) => b.count - a.count);
  const total = Object.values(byType).reduce((s, n) => s + n, 0);
  fs.writeFileSync(path.join(OUT, 'content_atoms.json'), JSON.stringify({ total, byType, topics, atoms: rows }));
- const CSS = 'body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:#faf5ec;color:#2b2620;margin:0;line-height:1.75;} .wrap{max-width:1080px;margin:0 auto;padding:0 28px;} a{color:inherit;text-decoration:none;} header{position:sticky;top:0;background:rgba(250,245,236,.95);backdrop-filter:blur(8px);border-bottom:1px solid #ebe1d2;z-index:10;} header .wrap{display:flex;justify-content:space-between;align-items:center;padding:12px 0;} .site-logo{font-weight:700;color:#d2593a;font-size:16px;} nav a{margin-left:18px;color:#6d6458;font-size:14px;} nav a:hover{color:#d2593a;} .hero{padding:44px 0 22px;text-align:center;} .hero h1{font-size:32px;margin:0 0 8px;color:#b8482c;} .tagline{color:#6d6458;font-size:16px;} .stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:22px 0;} .card{background:#fffdf8;border:1px solid #e7e1d3;border-radius:14px;padding:14px 18px;text-align:center;} .card .n{font-size:26px;font-weight:800;color:#b8482c;} .card .l{font-size:13px;color:#9b9083;margin-top:4px;} h2.yhead{color:#b8482c;margin:32px 0 12px;border-bottom:1px solid #e7e1d3;padding-bottom:6px;font-size:19px;} .topic{border:1px solid #e4e1d5;border-radius:14px;background:#fffdf8;margin:10px 0;padding:14px 18px;} .topic h3{margin:0 0 4px;font-size:17px;} .topic .meta{font-size:13px;color:#9b9083;margin:0 0 10px;} .bars{display:flex;gap:6px;align-items:flex-end;height:52px;margin:8px 0 6px;} .bars .col{flex:1;text-align:center;} .bars .col i{display:block;height:0;background:#d8a24a;border-radius:4px 4px 0 0;margin:0 auto;} .bars .col span{display:block;font-size:11px;color:#8a6f4f;margin-top:4px;text-align:center;} .gap{border-radius:10px;padding:8px 12px;font-size:13px;margin:10px 0 0;} .gap.warn{background:#fdf6e8;border:1px solid #eeddc2;color:#8a6f4f;} .gap.ok{background:#f2f7ee;border:1px solid #cfe0c0;color:#5d7a4f;} .hint{background:#fdf8ef;border:1px solid #eeddc2;border-radius:12px;padding:10px 14px;font-size:13px;color:#8a6f4f;margin-top:14px;} footer{text-align:center;color:#9b9083;font-size:13px;padding:28px 0 36px;border-top:1px solid #e7e1d3;}';
- const NAV = '<a href="index.html">首页</a><a href="topics.html">主题</a><a href="map.html">内容地图</a><a href="atoms.html">内容原子</a><a href="opportunity.html">选题机会</a><a href="archive.html">全部文章</a><a href="about.html">关于</a>';
- const HEADER = '<header><div class="wrap"><a class="site-logo" href="index.html">秋秋很开心</a><nav>' + NAV + '</nav></div></header>';
- const FOOTER = '<footer>© 2026 秋秋很开心 · 内容原子由全部文章自动抽取</footer>';
+const CSS = GHIBLI_CSS + ATOMS_EXTRA;
+const NAV = '<a href="index.html">首页</a><a href="topics.html">主题</a><a href="map.html">内容地图</a><a href="atoms.html">内容原子</a><a href="opportunity.html">选题机会</a><a href="archive.html">全部文章</a><a href="about.html">关于</a>';
+const HEADER = GHIBLI_SKY + '<header><div class="wrap"><a class="site-logo" href="index.html">秋秋很开心</a><nav>' + NAV + '</nav></div></header>';
+const FOOTER = GHIBLI_FOOTER;
  const statHtml = TYPES.map(t => '<div class="card"><div class="n">' + (byType[t] || 0) + '</div><div class="l">' + TYPE_LABEL[t] + ' 原子</div></div>').join('') + '<div class="card"><div class="n">' + total + '</div><div class="l">原子总数</div></div>';
  const topicHtml = topics.map(t => {
    const maxT = Math.max(1, ...TYPES.map(k => t.types[k] || 0));
