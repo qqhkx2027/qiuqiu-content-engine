@@ -41,6 +41,16 @@ python content/公众号/outputs/extract_articles.py
 (cd site && node build3.mjs)
 (cd site && node make_topics.mjs)
 (cd site && node build_extra.mjs)
+(cd site && node build_intel.mjs)
 (cd site && node linkcheck.mjs)
 
 构建后提交 docs/ 即可，GitHub Pages 托管 docs/ 目录。
+
+### 内容地图与选题机会
+
+`site/build_intel.mjs` 会自动分析全部文章标签，生成两个页面：
+
+- `docs/map.html`（内容地图）：502 篇文章按主题统计分布、均长、最近更新、代表文章、主题交叉覆盖
+- `docs/opportunity.html`（选题机会）：自动推荐「建议深耕」「主题交叉空白」「沉寂主题」三类选题，帮你看清已经写过什么、还缺什么
+
+刷新方法：改完文章后重跑 `node site/build_intel.mjs` 即可，无需手动维护。
