@@ -5,7 +5,7 @@
 ## 初始化
 
 ```bash
-cd 05-Agents/qiuqiu-content-engine
+cd qiuqiu-content-engine
 .venv/bin/python content_engine.py index
 ```
 

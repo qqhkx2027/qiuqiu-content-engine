@@ -3,6 +3,7 @@ data/
 __pycache__/
 *.pyc
 *.DS_Store
+web/node_modules/
 
 # 公开仓库不进的内容
 content/公众号/.workbuddy/
