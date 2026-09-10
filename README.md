@@ -32,17 +32,13 @@ cd qiuqiu-content-engine
 `docs/` 目录是秋秋个人网站的静态产物（502 篇文章，文章页自动跳转公众号原文）。
 线上地址：https://qqhkx2027.github.io/qiuqiu-content-engine/
 
-### 更新站点
-```bash
-# 1. 在 content/公众号/ 里更新文章 md
-# 2. 重新生成元数据索引（输出到 content/公众号/outputs/，不入库）
-python content/公众号/outputs/extract_articles.py
-# 3. 构建站点到 docs/
-(cd site && node build3.mjs)
-(cd site && node make_topics.mjs)
-(cd site && node build_extra.mjs)
-(cd site && node build_intel.mjs)
-(cd site && node linkcheck.mjs)
+### 更新站点（自动）
+网站由 GitHub Actions 自动更新，无需手动操作：
+
+- **推送新文章**：把新文章的 md 放进 `content/公众号/《秋秋很开心》/` 或 `content/公众号/《秋秋在分享》/`，提交推送到 main 后，Actions 会自动抽取 → 构建 → 发布，几分钟后线上出现新文章。
+- **定时巡检**：每天 09:00（UTC+8）自动再跑一次构建，若文章有变化会自动提交更新。
+- **手动触发**：仓库 → Actions → Auto Build & Deploy → Run workflow，可随时手动重建。
+- 若本地想手动预览：`python content/公众号/extract_articles.py` 生成索引，然后 `(cd site && node build3.mjs && node make_topics.mjs && node build_extra.mjs && node build_intel.mjs && node build_atoms.mjs && node linkcheck.mjs)` 构建到 `docs/`。
 
 构建后提交 docs/ 即可，GitHub Pages 托管 docs/ 目录。
 
