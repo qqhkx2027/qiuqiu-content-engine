@@ -56,3 +56,5 @@ fs.writeFileSync(path.join(OUT, 'rss.xml'), rss);
 const sm = fs.readFileSync(path.join(OUT, 'sitemap.xml'), 'utf8');
 if (!sm.includes('/search.html')) fs.writeFileSync(path.join(OUT, 'sitemap.xml'), sm.replace('</urlset>', '<url><loc>' + SITE + '/search.html</loc></url></urlset>'));
 console.log('extra done, posts:', clean.length);
+
+await import('./inject_filter.mjs').catch(e => console.error('inject fail:', e.message));
