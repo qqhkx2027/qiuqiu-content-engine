@@ -12,6 +12,7 @@ const steps = [
   ['build_about.mjs', '认识秋秋数据主页'],
   ['build_extra.mjs', '搜索页/存档/过滤器注入'],
   ['build_intel.mjs', '内容地图/选题机会'],
+  ['build_onboard.mjs', '首页双路引导/地图演化/选题改写'],
   ['build_atoms.mjs', '内容原子'],
   ['linkcheck.mjs', '链接完整性检查'],
 ];
