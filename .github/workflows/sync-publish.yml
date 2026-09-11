@@ -34,6 +34,16 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Fetch new wechat articles (wewe-rss)
+        env:
+          WEWE_RSS_ORIGIN: ${{ secrets.WEWE_RSS_ORIGIN }}
+        run: |
+          if [ -n "$WEWE_RSS_ORIGIN" ]; then
+            node site/fetch_wechat.mjs || echo '(拉取失败，继续构建)'
+          else
+            echo '(未配置 WEWE_RSS_ORIGIN，跳过拉取)'
+          fi
+
       - name: Extract article meta
         run: python content/公众号/extract_articles.py
 
@@ -53,4 +63,3 @@ jobs:
             git commit -m "docs: auto rebuild from content [skip ci]"
             git push origin main
           fi
-
