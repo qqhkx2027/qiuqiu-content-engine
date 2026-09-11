@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>关于 · 秋秋很开心</title><meta name="description" content="秋秋的个人网站，502 篇公众号历史文章存档"><meta property="og:title" content="关于 · 秋秋很开心"><meta property="og:description" content="秋秋的个人网站，502 篇公众号历史文章存档"><meta property="og:type" content="website"><meta property="og:site_name" content="秋秋很开心"><link rel="icon" href="favicon.svg" type="image/svg+xml"><style>/* 吉卜力水彩主题 — 全站共享 */
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>认识秋秋</title><style>/* 吉卜力水彩主题 — 全站共享 */
 :root{
   --sky:#e9f2ec; --cream:#fdf9f0; --paper:#fffdf6;
   --green:#5b7f63; --green-deep:#4c6f52; --blue:#6f9bb5;
@@ -87,4 +87,672 @@ h2.yhead{font-size:20px;color:var(--green-deep);margin:34px 0 14px;border-bottom
 .searchbar button{background:var(--green-deep);color:#fff;border:none;border-radius:999px;padding:0 26px;font-size:15px;font-weight:700;cursor:pointer}
 footer{text-align:center;color:var(--brown);font-size:13px;padding:34px 0 44px;background:linear-gradient(180deg,transparent,#e6f0dc)}
 @media(max-width:640px){.hero h1{font-size:28px}.grid{grid-template-columns:1fr}nav a{margin-left:10px;font-size:13px}}
-</style></head><body><div class="sky"><span class="cloud c1"></span><span class="cloud c2"></span><span class="sun"></span></div><div class="hill"></div><header><div class="wrap"><a class="site-logo" href="index.html">秋秋很开心</a><nav><a href="index.html">首页</a><a href="topics.html">主题</a><a href="map.html">内容地图</a><a href="opportunity.html">选题机会</a><a href="atoms.html">内容原子</a><a href="archive.html">全部文章</a><a href="about.html">关于</a><a href="search.html">搜索</a></nav></div></header><main class="wrap"><div class="hero"><h1>关于</h1><p class="tagline">这里是秋秋。公众号「秋秋很开心」「秋秋在分享」，用文字记录学习、读书、旅行和日子。</p></div></main><footer>© 2026 秋秋很开心 · 公众号文章存档 · 全部内容为秋秋原创</footer></body></html>
+
+
+:root{
+  --bg:#F5F3EF;
+  --card:#FFFFFF;
+  --ink:#16140F;
+  --ink2:#5B5449;
+  --ink3:#978D7D;
+  --line:rgba(22,20,15,.09);
+  --line2:rgba(22,20,15,.055);
+  --amber:#DF6738;
+  --moss:#2B5E4C;
+  --indigo:#3B597B;
+  --sand:#B0811F;
+  --plum:#8A5470;
+  --olive:#77824F;
+  --shadow:0 1px 2px rgba(22,20,15,.04), 0 6px 20px -12px rgba(22,20,15,.16);
+  --r:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+  -webkit-font-smoothing:antialiased;
+  font-variant-numeric:tabular-nums;
+  padding:18px;
+  overflow:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(760px 420px at 12% -8%, rgba(223,103,56,.075), transparent 62%),
+    radial-gradient(700px 400px at 92% 108%, rgba(43,94,76,.07), transparent 60%);
+}
+.page{position:relative;z-index:1;max-width:1404px;margin:0 auto}
+
+/* ---------- HERO ---------- */
+.hero{height:100px;display:flex;align-items:center;gap:26px;margin-bottom:12px}
+.hero-l{flex:1;min-width:0}
+.eyebrow{
+  font-size:10.5px;letter-spacing:.16em;color:var(--ink3);
+  text-transform:uppercase;font-weight:600;margin-bottom:7px;
+  display:flex;align-items:center;gap:9px;
+}
+.eyebrow .dot{width:5px;height:5px;border-radius:50%;background:var(--amber);flex:none}
+.nameline{display:flex;align-items:baseline;gap:12px}
+.name{font-size:37px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.latin{font-size:11px;letter-spacing:.24em;color:var(--ink3);font-weight:600}
+.role{
+  margin-left:12px;font-size:12.5px;color:var(--ink2);font-weight:600;
+  padding-left:13px;border-left:1.5px solid var(--line);
+}
+.tagline{margin-top:9px;font-size:13px;line-height:1.62;color:var(--ink2);max-width:940px}
+.tagline b{color:var(--ink);font-weight:700}
+.hero-r{
+  flex:none;width:326px;padding:13px 17px;border-radius:var(--r);
+  background:linear-gradient(135deg,rgba(223,103,56,.085),rgba(223,103,56,.02));
+  border:1px solid rgba(223,103,56,.19);
+}
+.hero-r .q{font-size:12.5px;line-height:1.66;color:var(--ink);font-weight:600;letter-spacing:.01em}
+.hero-r .src{margin-top:6px;font-size:10px;color:var(--ink3);letter-spacing:.02em}
+
+/* ---------- GRID ---------- */
+.grid{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:repeat(4,1fr);gap:12px;height:752px}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:15px 17px;box-shadow:var(--shadow);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;min-width:0;
+}
+.ch{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:11px;flex:none}
+.ct{font-size:12px;font-weight:800;letter-spacing:.02em;display:flex;align-items:center;gap:7px}
+.ct i{width:6px;height:6px;border-radius:2px;flex:none}
+.cmeta{font-size:9.5px;color:var(--ink3);letter-spacing:.05em;font-weight:600;white-space:nowrap}
+
+/* A 身份 */
+.a-id{grid-column:1/4;grid-row:1/3}
+.a-top{display:flex;align-items:center;gap:13px;margin-bottom:13px}
+.avatar{
+  width:56px;height:56px;border-radius:15px;flex:none;
+  background:linear-gradient(140deg,#2B5E4C,#3B7A62 55%,#4E9478);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:23px;font-weight:800;letter-spacing:-.02em;
+  box-shadow:0 5px 16px -6px rgba(43,94,76,.55);
+}
+.a-name{font-size:20px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+.a-sub{font-size:10.5px;color:var(--ink3);margin-top:3px;letter-spacing:.04em;font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.chip{
+  font-size:10px;padding:3px 8px;border-radius:20px;font-weight:600;letter-spacing:.01em;
+  background:rgba(22,20,15,.045);color:var(--ink2);border:1px solid transparent;
+}
+.chip.o{background:rgba(223,103,56,.1);color:#C1512A;border-color:rgba(223,103,56,.2)}
+.chip.g{background:rgba(43,94,76,.09);color:#24513F;border-color:rgba(43,94,76,.17)}
+.bio{font-size:11.5px;line-height:1.72;color:var(--ink2);margin-bottom:12px}
+.bio b{color:var(--ink);font-weight:700}
+.anchors{flex:1;display:flex;flex-direction:column;gap:0}
+.anchor{display:flex;gap:9px;align-items:flex-start;padding:5px 0;position:relative}
+.anchor:not(:last-child)::after{
+  content:"";position:absolute;left:3.5px;top:19px;bottom:-4px;width:1px;background:var(--line);
+}
+.anchor .pt{width:8px;height:8px;border-radius:50%;flex:none;margin-top:4px;background:var(--amber);box-shadow:0 0 0 2.5px #fff}
+.anchor.g2 .pt{background:var(--moss)}
+.anchor.g3 .pt{background:var(--indigo)}
+.anchor.g4 .pt{background:var(--sand)}
+.anchor .tx{font-size:11px;line-height:1.5;color:var(--ink2)}
+.anchor .tx b{color:var(--ink);font-weight:700}
+.anchor .tx span{color:var(--ink3);font-size:10px}
+.accounts{
+  margin-top:11px;padding-top:10px;border-top:1px dashed var(--line);
+  display:flex;gap:8px;flex:none;
+}
+.acc{flex:1;background:rgba(22,20,15,.032);border-radius:9px;padding:7px 9px}
+.acc .n{font-size:10.5px;font-weight:800;letter-spacing:.01em}
+.acc .d{font-size:9px;color:var(--ink3);margin-top:2px;line-height:1.4}
+
+/* B 内容地图 */
+.b-map{grid-column:4/9;grid-row:1/3}
+.bars{flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:2px}
+.bar-row{display:flex;align-items:center;gap:11px;height:38px;border-bottom:1px solid var(--line2)}
+.bar-row:last-of-type{border-bottom:none}
+.bn{width:112px;flex:none;font-size:11.5px;font-weight:700;display:flex;align-items:center;gap:6px}
+.bn i{width:7px;height:7px;border-radius:2px;flex:none}
+.btrack{flex:1;height:7px;border-radius:4px;background:rgba(22,20,15,.055);overflow:hidden;position:relative}
+.bfill{height:100%;border-radius:4px;transition:width .9s cubic-bezier(.22,1,.36,1)}
+.bv{width:74px;flex:none;text-align:right;font-size:10px;color:var(--ink3);font-weight:600}
+.bv b{font-size:12.5px;color:var(--ink);font-weight:800}
+.bnote{width:150px;flex:none;font-size:10px;color:var(--ink3);line-height:1.35;padding-left:4px}
+.flow{
+  margin-top:10px;padding:9px 12px;border-radius:10px;flex:none;
+  background:linear-gradient(100deg,rgba(59,89,123,.06),rgba(223,103,56,.07));
+  border:1px solid var(--line2);
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:10.5px;font-weight:600;
+}
+.flow span{padding:2.5px 8px;border-radius:6px;background:#fff;border:1px solid var(--line);color:var(--ink2)}
+.flow em{font-style:normal;color:var(--ink3);font-size:11px}
+.flow span.hi{background:var(--amber);color:#fff;border-color:var(--amber)}
+
+/* C 数据 */
+.c-num{grid-column:9/13;grid-row:1/2}
+.stats{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1px;background:var(--line2);border-radius:10px;overflow:hidden}
+.st{background:#fff;padding:11px 13px;display:flex;flex-direction:column;justify-content:center}
+.st .v{font-size:26px;font-weight:800;letter-spacing:-.035em;line-height:1;display:flex;align-items:baseline;gap:2px}
+.st .v small{font-size:11px;font-weight:700;color:var(--ink3);letter-spacing:0}
+.st .k{font-size:10px;color:var(--ink3);margin-top:5px;font-weight:600;letter-spacing:.04em}
+.st .s{font-size:9px;color:var(--ink3);margin-top:1px;opacity:.85}
+
+/* D 趋势 */
+.d-trend{grid-column:9/13;grid-row:2/3}
+.chart{flex:1;display:flex;align-items:flex-end;gap:7px;padding-top:2px}
+.col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:4px}
+.cv{font-size:10px;font-weight:800;color:var(--ink2);line-height:1}
+.cbar{width:100%;border-radius:4px 4px 2px 2px;background:linear-gradient(180deg,#EFC3AF,#DF6738);min-height:3px;transition:transform .3s,filter .3s}
+.col.peak .cbar{background:linear-gradient(180deg,#F0A87E,#D2542A)}
+.col.era .cbar{background:linear-gradient(180deg,#CFD8E2,#7C8FA6)}
+.cy{font-size:9px;color:var(--ink3);font-weight:600;letter-spacing:.02em}
+.legend{display:flex;gap:12px;margin-top:8px;flex:none;font-size:9px;color:var(--ink3);align-items:center}
+.legend i{width:8px;height:8px;border-radius:2px;display:inline-block;margin-right:4px;vertical-align:-1px}
+
+/* E 时间线 */
+.e-time{grid-column:1/9;grid-row:3/4}
+.tl{flex:1;display:flex;gap:0;align-items:stretch}
+.tl-item{flex:1;position:relative;padding:11px 13px 9px 15px;border-left:2px solid var(--line)}
+.tl-item:first-child{border-left:2px solid transparent;padding-left:13px}
+.tl-item::before{
+  content:"";position:absolute;left:-5px;top:13px;width:8px;height:8px;border-radius:50%;
+  background:#fff;border:2.5px solid var(--line);box-sizing:content-box;
+}
+.tl-item.k1::before{border-color:var(--indigo)}
+.tl-item.k2::before{border-color:var(--amber)}
+.tl-item.k3::before{border-color:var(--amber)}
+.tl-item.k4::before{border-color:var(--plum)}
+.tl-item.k5::before{border-color:var(--moss)}
+.tly{font-size:9.5px;font-weight:800;color:var(--ink3);letter-spacing:.06em}
+.tlt{font-size:12.5px;font-weight:800;margin:2px 0 3px;letter-spacing:-.01em}
+.tl-item.k1 .tlt{color:var(--indigo)}
+.tl-item.k2 .tlt,.tl-item.k3 .tlt{color:#C1512A}
+.tl-item.k4 .tlt{color:var(--plum)}
+.tl-item.k5 .tlt{color:var(--moss)}
+.tln{font-size:9.5px;color:var(--ink3);font-weight:700;margin-bottom:4px}
+.tld{font-size:10.5px;line-height:1.55;color:var(--ink2)}
+
+/* F 词云 */
+.f-cloud{grid-column:9/13;grid-row:3/5}
+.cloud{flex:1;display:flex;flex-wrap:wrap;align-content:flex-start;gap:5px 7px;padding-top:2px}
+.w{line-height:1;font-weight:700;letter-spacing:-.01em;transition:transform .2s,opacity .2s;border-radius:4px}
+.w:hover{transform:translateY(-1px);opacity:.75}
+.w .c{font-size:9px;font-weight:600;opacity:.5;vertical-align:super;margin-left:1px}
+
+/* G 代表作品 */
+.g-works{grid-column:1/5;grid-row:4/5}
+.works{flex:1;display:flex;flex-direction:column;gap:0}
+.wk{
+  flex:1;display:flex;align-items:center;gap:10px;padding:0 6px;border-radius:8px;
+  border-bottom:1px solid var(--line2);min-height:0;transition:background .2s;
+}
+.wk:last-child{border-bottom:none}
+.wk:hover{background:rgba(223,103,56,.045)}
+.wk .idx{
+  font-size:9.5px;font-weight:800;color:var(--ink3);width:15px;flex:none;
+  font-variant-numeric:tabular-nums;
+}
+.wk .body{flex:1;min-width:0}
+.wk .t{
+  font-size:11.5px;font-weight:700;line-height:1.35;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;
+}
+.wk .w{font-size:9.5px;color:var(--ink3);line-height:1.3;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wk .d{font-size:9.5px;color:var(--ink3);flex:none;font-weight:600;font-variant-numeric:tabular-nums}
+
+/* H 特色 */
+.h-trait{grid-column:5/9;grid-row:4/5}
+.traits{flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:6px}
+.tr{display:flex;gap:9px;align-items:flex-start}
+.tr .no{
+  width:17px;height:17px;border-radius:5px;flex:none;display:flex;align-items:center;justify-content:center;
+  font-size:9.5px;font-weight:800;color:#fff;margin-top:1px;
+}
+.tr:nth-child(1) .no{background:var(--amber)}
+.tr:nth-child(2) .no{background:var(--moss)}
+.tr:nth-child(3) .no{background:var(--plum)}
+.tr .tx{min-width:0}
+.tr .h{font-size:11.5px;font-weight:800;line-height:1.35;letter-spacing:-.005em}
+.tr .p{font-size:9.5px;line-height:1.5;color:var(--ink3);margin-top:2px}
+.tr .p b{color:var(--ink2);font-weight:700}
+
+/* I 金句 */
+.i-quote{grid-column:9/13;grid-row:3/5;display:none}
+
+/* 与站点衔接 */
+.about-banner{max-width:1404px;margin:-4px auto 6px;padding:0 24px;font-size:12.5px;color:var(--brown);}
+.about-banner span{font-weight:700;color:var(--green-deep)}
+</style></head><body><div class="sky"><span class="cloud c1"></span><span class="cloud c2"></span><span class="sun"></span></div><div class="hill"></div><header><div class="wrap"><a class="site-logo" href="index.html">秋秋很开心</a><nav><a href="index.html">首页</a><a href="topics.html">主题</a><a href="map.html">内容地图</a><a href="opportunity.html">选题机会</a><a href="atoms.html">内容原子</a><a href="archive.html">全部文章</a><a href="about.html">关于</a><a href="search.html">搜索</a></nav></div></header>
+<div class="page"><div class="about-band"><span>由真实文章生成</span> · 数据与文章一一对应</div>
+
+  <!-- ================= HERO ================= -->
+  <div class="hero">
+    <div class="hero-l">
+      <div class="eyebrow"><span class="dot"></span>Personal Content Home · 由 502 篇历史文章逐篇解析生成</div>
+      <div class="nameline">
+        <div class="name">秋秋</div>
+        <div class="latin">QIUQIU</div>
+        <div class="role">海岸 FIRE 实践者 · 内容创作者 · 「秋秋很开心」「秋秋在分享」主笔</div>
+      </div>
+      <div class="tagline">
+        <b>96 年生，24 岁裸辞、25 岁存到第一个 100 万、26 岁带着 250 万退休</b>（目标 300 万，没存够就退了）。
+        8 年写了 502 篇文章，把「一个普通女生怎么不上班也能过好」这件事，<b>连同每一笔账、每一次失败一起写下来</b>。
+      </div>
+    </div>
+    <div class="hero-r">
+      <div class="q">「我好像无法给出建议，我先给出经历。」</div>
+      <div class="src">—— 《二本 985 存款百万 退休｜普通女孩的前半生？》2023.04.12</div>
+    </div>
+  </div>
+
+  <!-- ================= GRID ================= -->
+  <div class="grid">
+
+    <!-- A 身份卡 -->
+    <section class="card a-id">
+      <div class="ch">
+        <div class="ct"><i style="background:var(--amber)"></i>我是谁</div>
+        <div class="cmeta">WHO</div>
+      </div>
+      <div class="a-top">
+        <div class="avatar">秋</div>
+        <div>
+          <div class="a-name">秋秋</div>
+          <div class="a-sub">96 年 · 山东 · 海岸 FIRE</div>
+        </div>
+      </div>
+      <div class="chips">
+        <span class="chip o">26 岁退休</span>
+        <span class="chip g">海岸 FIRE</span>
+        <span class="chip">极简主义</span>
+        <span class="chip">二本 → 985 肄业</span>
+        <span class="chip">心理学出身</span>
+        <span class="chip">带娃旅居中</span>
+      </div>
+      <div class="bio">
+        二本心理学本科 → 考研调剂进北京 985 非全日制 → <b>24 岁退学</b>。
+        22 岁来北京做编导（7000 → 12K → 15K），<b>2020 年 11 月裸辞</b>，靠写作、剪辑与理财活下来。
+        不教人投资，主力工具是<b>银行大额存单</b>；不卖课，把「我这一年到底花了多少」公开成账本。
+      </div>
+      <div class="anchors">
+        <div class="anchor"><div class="pt"></div><div class="tx"><b>24 岁裸辞</b> <span>2020.11</span><br>辞掉 15K 的编导工作，全职做内容</div></div>
+        <div class="anchor g2"><div class="pt"></div><div class="tx"><b>25 岁第一个 100 万</b> <span>2021</span><br>毕业 3 年，攒下老家一套房全款</div></div>
+        <div class="anchor g3"><div class="pt"></div><div class="tx"><b>26 岁宣布退休</b> <span>2022.06.30</span><br>本金 250 万，月息 6000–7000</div></div>
+        <div class="anchor g4"><div class="pt"></div><div class="tx"><b>30 岁旅居中国</b> <span>2025.04 –</span><br>结束 7 年北漂，骑行 800km 去威海</div></div>
+      </div>
+      <div class="accounts">
+        <div class="acc"><div class="n">秋秋很开心</div><div class="d">2018 – 至今 · 效率 / 学习 / AI 工具</div></div>
+        <div class="acc"><div class="n">秋秋在分享</div><div class="d">2022 – 至今 · FIRE / 理财 / 旅居账本</div></div>
+      </div>
+    </section>
+
+    <!-- B 内容地图 -->
+    <section class="card b-map">
+      <div class="ch">
+        <div class="ct"><i style="background:var(--moss)"></i>内容地图 · 8 年写了什么</div>
+        <div class="cmeta">按正文语义归类，单篇可跨类</div>
+      </div>
+      <div class="bars">
+        <div class="bar-row">
+          <div class="bn"><i style="background:var(--plum)"></i>成长 · 心态</div>
+          <div class="btrack"><div class="bfill" data-w="100" style="background:var(--plum)"></div></div>
+          <div class="bv"><b>183</b> 篇 · 37%</div>
+          <div class="bnote">自卑、焦虑、幸福、意义——所有内容的内核层</div>
+        </div>
+        <div class="bar-row">
+          <div class="bn"><i style="background:var(--moss)"></i>旅居 · 生活</div>
+          <div class="btrack"><div class="bfill" data-w="96" style="background:var(--moss)"></div></div>
+          <div class="bv"><b>188</b> 篇 · 38%</div>
+          <div class="bnote">退休后的日常、带娃、八段锦、寺庙义工</div>
+        </div>
+        <div class="bar-row">
+          <div class="bn"><i style="background:var(--indigo)"></i>效率 · AI 工具</div>
+          <div class="btrack"><div class="bfill" data-w="89" style="background:var(--indigo)"></div></div>
+          <div class="bv"><b>165</b> 篇 · 33%</div>
+          <div class="bnote">起家底盘：App、笔记、Obsidian、Hermes</div>
+        </div>
+        <div class="bar-row">
+          <div class="bn"><i style="background:var(--amber)"></i>提前退休 FIRE</div>
+          <div class="btrack"><div class="bfill" data-w="85" style="background:var(--amber)"></div></div>
+          <div class="bv"><b>156</b> 篇 · 31%</div>
+          <div class="bnote">2022 年后主轴：财富篇 / 心态篇 / 未来篇</div>
+        </div>
+        <div class="bar-row">
+          <div class="bn"><i style="background:var(--sand)"></i>理财 · 存钱</div>
+          <div class="btrack"><div class="bfill" data-w="60" style="background:var(--sand)"></div></div>
+          <div class="bv"><b>109</b> 篇 · 22%</div>
+          <div class="bnote">从「14 个副业」到「721 配置」「四维组合」</div>
+        </div>
+        <div class="bar-row">
+          <div class="bn"><i style="background:var(--olive)"></i>读书 · 书单</div>
+          <div class="btrack"><div class="bfill" data-w="27" style="background:var(--olive)"></div></div>
+          <div class="bv"><b>49</b> 篇 · 10%</div>
+          <div class="bnote">豆瓣 Top250 计划，加缪 / 黑塞 / 叔本华</div>
+        </div>
+      </div>
+      <div class="flow">
+        <span>效率 AI（底盘）</span><em>+</em>
+        <span>成长心态（内核）</span><em>→</em>
+        <span>理财存钱（手段）</span><em>→</em>
+        <span class="hi">提前退休 FIRE（目标）</span><em>→</em>
+        <span>旅居生活（结果）</span>
+      </div>
+    </section>
+
+    <!-- C 数据 -->
+    <section class="card c-num">
+      <div class="ch">
+        <div class="ct"><i style="background:var(--indigo)"></i>历史内容洞察</div>
+        <div class="cmeta">2018.02 – 2026.08</div>
+      </div>
+      <div class="stats">
+        <div class="st">
+          <div class="v">502</div>
+          <div class="k">篇文章</div>
+          <div class="s">两个公众号合计</div>
+        </div>
+        <div class="st">
+          <div class="v">8<small>年6月</small></div>
+          <div class="k">写作跨度</div>
+          <div class="s">2018.02.09 首篇</div>
+        </div>
+        <div class="st">
+          <div class="v">75.1<small>万字</small></div>
+          <div class="k">正文总量</div>
+          <div class="s">均篇 1512 字</div>
+        </div>
+        <div class="st">
+          <div class="v">119<small>篇</small></div>
+          <div class="k">最高产年份</div>
+          <div class="s">2025 年 · 月均 10 篇</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- D 趋势 -->
+    <section class="card d-trend">
+      <div class="ch">
+        <div class="ct"><i style="background:var(--sand)"></i>年度发文量</div>
+        <div class="cmeta">2018 – 2026</div>
+      </div>
+      <div class="chart" id="chart"></div>
+      <div class="legend">
+        <span><i style="background:linear-gradient(180deg,#EFC3AF,#DF6738)"></i>FIRE 时期</span>
+        <span><i style="background:linear-gradient(180deg,#CFD8E2,#7C8FA6)"></i>效率工具时期</span>
+        <span style="margin-left:auto">2025 年峰值 119 篇</span>
+      </div>
+    </section>
+
+    <!-- E 时间线 -->
+    <section class="card e-time">
+      <div class="ch">
+        <div class="ct"><i style="background:var(--amber)"></i>成长轨迹 · 一条从「工具」走向「自由」的路</div>
+        <div class="cmeta">5 个阶段 · 由 502 篇正文归纳</div>
+      </div>
+      <div class="tl">
+        <div class="tl-item k1">
+          <div class="tly">2018 – 2021 · 167 篇</div>
+          <div class="tlt">效率工具期</div>
+          <div class="tln">北漂编导 · 攒第一个 100 万</div>
+          <div class="tld">写 App、思维导图、打印机测评、书单。心理学出身，却把心理学用在解剖自己。</div>
+        </div>
+        <div class="tl-item k2">
+          <div class="tly">2022 · 66 篇</div>
+          <div class="tlt">退休元年</div>
+          <div class="tln">26 岁 · 250 万</div>
+          <div class="tld">体检查出 10 多个小毛病，成为导火索。<b>没存够 300 万也退了</b>，第一次区分「财务自由 ≠ 财富自由」。</div>
+        </div>
+        <div class="tl-item k3">
+          <div class="tly">2023 · 48 篇</div>
+          <div class="tlt">FIRE 体系化</div>
+          <div class="tln">财富篇 / 心态篇 / 未来篇</div>
+          <div class="tld">把退休拆成专栏写，出书、领证。年底提出「有钱 / 好心态 / 对能力自信」三足鼎立。</div>
+        </div>
+        <div class="tl-item k4">
+          <div class="tly">2024 – 2025 · 176 篇</div>
+          <div class="tlt">全家 FIRE</div>
+          <div class="tln">生娃 · 一家三口账本</div>
+          <div class="tld">账本从「一人 4 万」变成「一家 29 万」，首次承认：<b>想一家人财务自由，有点难</b>。</div>
+        </div>
+        <div class="tl-item k5">
+          <div class="tly">2025.04 – 2026 · 50 篇</div>
+          <div class="tlt">旅居中国</div>
+          <div class="tln">威海 → 海南 → 大理</div>
+          <div class="tld">结束 7 年北漂，骑行 800km、自驾 3000km。<b>300 万变 600 万</b>，开始写 AI 与智能体。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- F 词云 -->
+    <section class="card f-cloud">
+      <div class="ch">
+        <div class="ct"><i style="background:var(--olive)"></i>高频关键词</div>
+        <div class="cmeta">数字 = 出现篇数</div>
+      </div>
+      <div class="cloud" id="cloud"></div>
+    </section>
+
+    <!-- G 代表作品 -->
+    <section class="card g-works">
+      <div class="ch">
+        <div class="ct"><i style="background:var(--amber)"></i>代表作品 · 第一次来先读这 5 篇</div>
+        <div class="cmeta">502 篇中精选</div>
+      </div>
+      <div class="works">
+        <div class="wk">
+          <div class="idx">01</div>
+          <div class="body">
+            <div class="t">26 岁，我打算正式退休了！</div>
+            <div class="w">整个内容宇宙的原点，第一次把「财务自由 ≠ 财富自由」讲清</div>
+          </div>
+          <div class="d">2022.06</div>
+        </div>
+        <div class="wk">
+          <div class="idx">02</div>
+          <div class="body">
+            <div class="t">退休 3 个月，收入 10 万块。</div>
+            <div class="w">唯一一篇把退休后现金流完全摊开：存单利息 / 广告 / 分成</div>
+          </div>
+          <div class="d">2022.09</div>
+        </div>
+        <div class="wk">
+          <div class="idx">03</div>
+          <div class="body">
+            <div class="t">小城市 45–60 万真的足够 Fire！</div>
+            <div class="w">回老家实地询价：粥 1 元、包子 7 毛、带院房 26 万</div>
+          </div>
+          <div class="d">2022.07</div>
+        </div>
+        <div class="wk">
+          <div class="idx">04</div>
+          <div class="body">
+            <div class="t">不上班三年，我是如何省钱 / 花钱的？</div>
+            <div class="w">独创「时间自由 = 错峰套利」：环球年卡 1688 去 50 次</div>
+          </div>
+          <div class="d">2023.05</div>
+        </div>
+        <div class="wk">
+          <div class="idx">05</div>
+          <div class="body">
+            <div class="t">退休 3 年，我的资产翻倍了</div>
+            <div class="w">300 万 → 600 万，提出「金钱 / 身体 / 能力」三重复利</div>
+          </div>
+          <div class="d">2026.01</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- H 特色 -->
+    <section class="card h-trait">
+      <div class="ch">
+        <div class="ct"><i style="background:var(--plum)"></i>我和别的作者有什么不同</div>
+        <div class="cmeta">3 个内容特色 · 均有原文证据</div>
+      </div>
+      <div class="traits">
+        <div class="tr">
+          <div class="no">1</div>
+          <div class="tx">
+            <div class="h">账本式写作：每个观点后面都跟着一个可核对的数字</div>
+            <div class="p">大理旅居月开销 1.3 万（食堂素菜 2 元、荤菜 4 元）；自驾三亚 60 天花 <b>37600 元</b>；威海海景房 <b>1500/月</b> vs 北京 8000+。连「没存够 300 万就退了」「明年可能 0 收入」「婆婆确诊肺腺癌」「账号被封」也照写。</div>
+          </div>
+        </div>
+        <div class="tr">
+          <div class="no">2</div>
+          <div class="tx">
+            <div class="h">不教投资，教「降欲望 + 错峰套利」</div>
+            <div class="p">全库谈「基金股票年化」仅零星几处，主力是<b>银行大额存单（20 万起存、3.55%）</b>，自称「最懒的方法」。独创结论：<b>「办卡其实适合不上班」</b>——别人用钱生钱，她用时间换钱。</div>
+          </div>
+        </div>
+        <div class="tr">
+          <div class="no">3</div>
+          <div class="tx">
+            <div class="h">样本，不是导师：「我好像无法给出建议，我先给出经历」</div>
+            <div class="p">2021 年知识付费最热时主动放弃开课卖课；公开拆解「月入 10 万」标题党产业链；2023 年底把 FIRE 从「算钱」推进到<b>「有钱 / 好心态 / 对能力自信」三足鼎立</b>。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+/* ---------- 年度柱状图 ---------- */
+const YEARS = [
+  {y:'2018', n:6,   era:true},
+  {y:'2019', n:14,  era:true},
+  {y:'2020', n:67,  era:true},
+  {y:'2021', n:80,  era:true},
+  {y:'2022', n:66,  era:false},
+  {y:'2023', n:48,  era:false},
+  {y:'2024', n:57,  era:false},
+  {y:'2025', n:119, era:false, peak:true},
+  {y:'2026', n:45,  era:false}
+];
+const max = Math.max(...YEARS.map(d=>d.n));
+const chart = document.getElementById('chart');
+YEARS.forEach((d,i)=>{
+  const col = document.createElement('div');
+  col.className = 'col' + (d.peak?' peak':'') + (d.era?' era':'');
+  col.title = d.y + ' 年 · ' + d.n + ' 篇';
+  col.innerHTML = '<div class="cv">'+d.n+'</div>'
+    + '<div class="cbar" style="height:0"></div>'
+    + '<div class="cy">'+d.y.slice(2)+'</div>';
+  chart.appendChild(col);
+  const bar = col.querySelector('.cbar');
+  setTimeout(()=>{ bar.style.height = (d.n/max*100) + '%'; }, 90 + i*42);
+});
+
+/* ---------- 关键词云 ---------- */
+const WORDS = [
+  ['自由',302,'var(--amber)'],['退休',285,'var(--amber)'],['北京',268,'var(--ink2)'],
+  ['财务自由',200,'var(--amber)'],['选择',184,'var(--plum)'],['内容',181,'var(--indigo)'],
+  ['FIRE',167,'var(--amber)'],['App',157,'var(--indigo)'],['方法',154,'var(--indigo)'],
+  ['目标',143,'var(--plum)'],['提前退休',139,'var(--amber)'],['效率',139,'var(--indigo)'],
+  ['读书',138,'var(--olive)'],['计划',137,'var(--indigo)'],['小红书',131,'var(--ink2)'],
+  ['幸福',131,'var(--plum)'],['写作',123,'var(--indigo)'],['剪辑',122,'var(--indigo)'],
+  ['抖音',121,'var(--ink2)'],['粉丝',114,'var(--ink2)'],['笔记',112,'var(--indigo)'],
+  ['理财',107,'var(--sand)'],['技能',96,'var(--indigo)'],['公众号',92,'var(--ink2)'],
+  ['书单',92,'var(--olive)'],['运动',92,'var(--moss)'],['裸辞',87,'var(--amber)'],
+  ['存钱',86,'var(--sand)'],['体验',81,'var(--moss)'],['心理',81,'var(--plum)'],
+  ['工具',81,'var(--indigo)'],['消费',79,'var(--sand)'],['焦虑',78,'var(--plum)'],
+  ['不上班',77,'var(--amber)'],['山东',77,'var(--moss)'],['意义',75,'var(--plum)'],
+  ['健康',75,'var(--moss)'],['开销',69,'var(--sand)'],['心态',67,'var(--plum)'],
+  ['自媒体',66,'var(--indigo)'],['摄影',66,'var(--ink2)'],['旅居',63,'var(--moss)'],
+  ['父母',60,'var(--plum)'],['自由职业',49,'var(--amber)'],['省钱',45,'var(--sand)'],
+  ['养老',44,'var(--sand)'],['黄金',43,'var(--sand)'],['豆瓣',41,'var(--olive)'],
+  ['威海',37,'var(--moss)'],['复盘',37,'var(--indigo)'],['AI',35,'var(--indigo)'],
+  ['骑行',30,'var(--moss)'],['被动收入',28,'var(--amber)'],['大额存单',27,'var(--sand)'],
+  ['海南',27,'var(--moss)'],['睡眠',27,'var(--moss)'],['极简主义',26,'var(--plum)'],
+  ['复利',25,'var(--sand)'],['物价',23,'var(--sand)'],['纳斯达克',20,'var(--sand)'],
+  ['寺庙',20,'var(--moss)'],['大理',18,'var(--moss)'],['股息',17,'var(--sand)']
+];
+const maxW = WORDS[0][1], minW = WORDS[WORDS.length-1][1];
+const cloud = document.getElementById('cloud');
+WORDS.forEach(([w,n,c])=>{
+  const t = (n - minW) / (maxW - minW);
+  const size = 10 + t * 12.5;
+  const op = 0.62 + t * 0.38;
+  const s = document.createElement('span');
+  s.className = 'w';
+  s.style.cssText = 'font-size:'+size.toFixed(1)+'px;color:'+c+';opacity:'+op.toFixed(2);
+  s.innerHTML = w + '<span class="c">'+n+'</span>';
+  cloud.appendChild(s);
+});
+
+/* ---------- 进度条动画 ---------- */
+setTimeout(()=>{
+  document.querySelectorAll('.bfill').forEach((el,i)=>{
+    setTimeout(()=>{ el.style.width = el.dataset.w + '%'; }, i*70);
+  });
+}, 220);
+</script>
+<script>
+/* ---------- 年度柱状图 ---------- */
+const YEARS = [
+  {y:'2018', n:6,   era:true},
+  {y:'2019', n:14,  era:true},
+  {y:'2020', n:67,  era:true},
+  {y:'2021', n:80,  era:true},
+  {y:'2022', n:66,  era:false},
+  {y:'2023', n:48,  era:false},
+  {y:'2024', n:57,  era:false},
+  {y:'2025', n:119, era:false, peak:true},
+  {y:'2026', n:44,  era:false}
+];
+const max = Math.max(...YEARS.map(d=>d.n));
+const chart = document.getElementById('chart');
+YEARS.forEach((d,i)=>{
+  const col = document.createElement('div');
+  col.className = 'col' + (d.peak?' peak':'') + (d.era?' era':'');
+  col.title = d.y + ' 年 · ' + d.n + ' 篇';
+  col.innerHTML = '<div class="cv">'+d.n+'</div>'
+    + '<div class="cbar" style="height:0"></div>'
+    + '<div class="cy">'+d.y.slice(2)+'</div>';
+  chart.appendChild(col);
+  const bar = col.querySelector('.cbar');
+  setTimeout(()=>{ bar.style.height = (d.n/max*100) + '%'; }, 90 + i*42);
+});
+
+/* ---------- 关键词云 ---------- */
+const WORDS = [
+  ['自由',302,'var(--amber)'],['退休',285,'var(--amber)'],['北京',268,'var(--ink2)'],
+  ['财务自由',200,'var(--amber)'],['选择',184,'var(--plum)'],['内容',181,'var(--indigo)'],
+  ['FIRE',167,'var(--amber)'],['App',157,'var(--indigo)'],['方法',154,'var(--indigo)'],
+  ['目标',143,'var(--plum)'],['提前退休',139,'var(--amber)'],['效率',139,'var(--indigo)'],
+  ['读书',138,'var(--olive)'],['计划',137,'var(--indigo)'],['小红书',131,'var(--ink2)'],
+  ['幸福',131,'var(--plum)'],['写作',123,'var(--indigo)'],['剪辑',122,'var(--indigo)'],
+  ['抖音',121,'var(--ink2)'],['粉丝',114,'var(--ink2)'],['笔记',112,'var(--indigo)'],
+  ['理财',107,'var(--sand)'],['技能',96,'var(--indigo)'],['公众号',92,'var(--ink2)'],
+  ['书单',92,'var(--olive)'],['运动',92,'var(--moss)'],['裸辞',87,'var(--amber)'],
+  ['存钱',86,'var(--sand)'],['体验',81,'var(--moss)'],['心理',81,'var(--plum)'],
+  ['工具',81,'var(--indigo)'],['消费',79,'var(--sand)'],['焦虑',78,'var(--plum)'],
+  ['不上班',77,'var(--amber)'],['山东',77,'var(--moss)'],['意义',75,'var(--plum)'],
+  ['健康',75,'var(--moss)'],['开销',69,'var(--sand)'],['心态',67,'var(--plum)'],
+  ['自媒体',66,'var(--indigo)'],['摄影',66,'var(--ink2)'],['旅居',63,'var(--moss)'],
+  ['父母',60,'var(--plum)'],['自由职业',49,'var(--amber)'],['省钱',45,'var(--sand)'],
+  ['养老',44,'var(--sand)'],['黄金',43,'var(--sand)'],['豆瓣',41,'var(--olive)'],
+  ['威海',37,'var(--moss)'],['复盘',37,'var(--indigo)'],['AI',35,'var(--indigo)'],
+  ['骑行',30,'var(--moss)'],['被动收入',28,'var(--amber)'],['大额存单',27,'var(--sand)'],
+  ['海南',27,'var(--moss)'],['睡眠',27,'var(--moss)'],['极简主义',26,'var(--plum)'],
+  ['复利',25,'var(--sand)'],['物价',23,'var(--sand)'],['纳斯达克',20,'var(--sand)'],
+  ['寺庙',20,'var(--moss)'],['大理',18,'var(--moss)'],['股息',17,'var(--sand)']
+];
+const maxW = WORDS[0][1], minW = WORDS[WORDS.length-1][1];
+const cloud = document.getElementById('cloud');
+WORDS.forEach(([w,n,c])=>{
+  const t = (n - minW) / (maxW - minW);
+  const size = 10 + t * 12.5;
+  const op = 0.62 + t * 0.38;
+  const s = document.createElement('span');
+  s.className = 'w';
+  s.style.cssText = 'font-size:'+size.toFixed(1)+'px;color:'+c+';opacity:'+op.toFixed(2);
+  s.innerHTML = w + '<span class="c">'+n+'</span>';
+  cloud.appendChild(s);
+});
+
+/* ---------- 进度条动画 ---------- */
+setTimeout(()=>{
+  document.querySelectorAll('.bfill').forEach((el,i)=>{
+    setTimeout(()=>{ el.style.width = el.dataset.w + '%'; }, i*70);
+  });
+}, 220);
+</script><footer>© 2026 秋秋很开心 · 公众号文章存档 · 全部内容为秋秋原创</footer></body></html>

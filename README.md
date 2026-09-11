@@ -38,7 +38,7 @@ cd qiuqiu-content-engine
 - **推送新文章**：把新文章的 md 放进 `content/公众号/《秋秋很开心》/` 或 `content/公众号/《秋秋在分享》/`，提交推送到 main 后，Actions 会自动抽取 → 构建 → 发布，几分钟后线上出现新文章。
 - **定时巡检**：每天 09:00（UTC+8）自动再跑一次构建，若文章有变化会自动提交更新。
 - **手动触发**：仓库 → Actions → Auto Build & Deploy → Run workflow，可随时手动重建。
-- 若本地想手动预览：`python content/公众号/extract_articles.py` 生成索引，然后 `(cd site && node build3.mjs && node make_topics.mjs && node build_extra.mjs && node build_intel.mjs && node build_atoms.mjs && node linkcheck.mjs)` 构建到 `docs/`。
+- 若本地想手动预览：`python content/公众号/extract_articles.py` 生成索引，然后 `(cd site && node build_all.mjs)` 构建到 `docs/`。
 
 构建后提交 docs/ 即可，GitHub Pages 托管 docs/ 目录。
 
@@ -49,4 +49,4 @@ cd qiuqiu-content-engine
 - `docs/map.html`（内容地图）：502 篇文章按主题统计分布、均长、最近更新、代表文章、主题交叉覆盖
 - `docs/opportunity.html`（选题机会）：自动推荐「建议深耕」「主题交叉空白」「沉寂主题」三类选题，帮你看清已经写过什么、还缺什么
 
-刷新方法：改完文章后重跑 `node site/build_intel.mjs` 即可，无需手动维护。
+刷新方法：改完文章后重跑 `node site/build_all.mjs` 即可，无需手动维护。

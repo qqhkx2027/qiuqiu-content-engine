@@ -40,12 +40,7 @@ jobs:
       - name: Build site
         run: |
           cd site
-          node build3.mjs
-          node make_topics.mjs
-          node build_extra.mjs
-          node build_intel.mjs
-          node build_atoms.mjs
-          node linkcheck.mjs
+          node build_all.mjs
 
       - name: Commit generated docs if changed
         run: |
