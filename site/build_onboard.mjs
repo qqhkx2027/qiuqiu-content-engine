@@ -7,7 +7,7 @@ const OUT = path.join(import.meta.dirname, '..', 'docs');
 // 1) 首页 hero：两个 CTA + 引导条
 const idx = path.join(OUT, 'index.html');
 let ih = fs.readFileSync(idx, 'utf8');
-if (!ih.includes('欢迎两条路')) {
+if (!ih.includes('ob-title')) {
   // 主按钮序列改为：认识秋秋(主) + 探索我的内容(outline)
   ih = ih.replace(
     '<a class="btn" href="archive.html">阅读全部文章</a><a class="btn outline" href="about.html">认识秋秋</a>',
@@ -15,7 +15,7 @@ if (!ih.includes('欢迎两条路')) {
   );
   // 在 hero 结束后插入引导条（两条路）
   const onboard = '<div class="onboard"><div class="ob-title">欢迎 👋 第一次来，有两条路</div><div class="ob-row"><a class="ob-card" href="about.html"><div class="ob-h">认识秋秋</div><div class="ob-d">看看我为什么写这些东西</div></a><a class="ob-card" href="map.html"><div class="ob-h">探索我的内容</div><div class="ob-d">502 + 篇文章，看看这些年我到底写了什么</div></a></div></div>';
-  ih = ih.replace('</div><div class="searchbar"', '</div>' + onboard + '<div class="searchbar"');
+  ih = ih.replace('<form class="searchbar"', onboard + '<form class="searchbar"');
   // CSS 追加
   const obCss = '<style>.onboard{background:rgba(255,253,246,.78);border:1.5px dashed var(--line);border-radius:18px;padding:18px 20px;margin:24px auto 10px;max-width:620px}.onboard .welcome{font-size:14px;font-weight:800;color:var(--green-deep);margin-bottom:12px}.onboard .ob-row{display:flex;gap:12px;flex-wrap:wrap}.onboard .ob-card{flex:1;min-width:220px;background:var(--paper);border:1.5px solid var(--line);border-radius:14px;padding:11px 14px;transition:.15s;display:block}.onboard .ob-card:hover{border-color:var(--green);transform:translateY(-2px)}.onboard .ob-h{font-size:14px;font-weight:800;color:var(--ink)}.onboard .ob-d{font-size:12px;color:var(--brown);margin-top:3px;line-height:1.5}</style>';
   ih = ih.replace('</style>', obCss);
