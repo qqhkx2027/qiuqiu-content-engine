@@ -12,9 +12,22 @@ const curByFile = new Map(cur.map(x => [x.filename, x.url]));
 
 let old = [];
 try {
-  old = JSON.parse(execSync('git show HEAD:docs/urls.json', { cwd: ROOT, encoding: 'utf8' }));
+  let rev = 'HEAD';
+  const headU = JSON.parse(execSync('git show HEAD:docs/urls.json', { cwd: ROOT, encoding: 'utf8' }));
+  if (headU.length && headU[0].url && !/\/post\/\d{4}.html/.test(headU[0].url)) {
+    // HEAD 已是新格式（YYYYMMDD-hash），找历史里最近的旧格式清单
+    const log = execSync(`git log --format=%H -- docs/urls.json`, { cwd: ROOT, encoding: 'utf8' }).trim().split('\n');
+    for (const c of log) {
+      try {
+        const u = JSON.parse(execSync(`git show ${c}:docs/urls.json`, { cwd: ROOT, encoding: 'utf8' }));
+        if (u.length && /\d{4}.html/.test(u[0].url)) { old = u; break; }
+      } catch (_) {}
+    }
+  } else {
+    old = headU;
+  }
 } catch (e) {
-  console.log('old urls.json unavailable, skip redirect generation');
+  console.log('旧文件不存在，跳过重定向生成');
 }
 
 const newNames = new Set(cur.map(x => x.url.replace(/^\//, '')));
@@ -24,7 +37,6 @@ for (const o of old) {
   const nu = curByFile.get(o.filename);
   if (!nu || nu === o.url) continue;
   const oldPath = path.join(OUT, o.url.replace(/^\//, ''));
-  if (!fs.existsSync(oldPath)) continue;
   const rel = nu.replace(/^\//, '');
   const redirHtml = '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="refresh" content="0;url=' + rel + '"><title>跳转中 · 秋秋</title></head><body style="font-family:sans-serif;padding:60px;text-align:center;background:#fdf9f0"><p>文章已迁移到新地址</p><a href="' + rel + '" style="color:#5b7f63;font-weight:700">点击进入新文章页 →</a></body></html>';
   fs.writeFileSync(oldPath, redirHtml);
