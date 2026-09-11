@@ -49,7 +49,9 @@ for (const a of clean) { const y = a.date.slice(0,4); (byYear[y] ||= []).push(a)
 const years = Object.keys(byYear).sort().reverse();
 
 const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-let slugN = 0; const slug = () => { slugN++; return '/post/' + String(slugN).padStart(4, '0') + '.html'; };
+// 稳定 URL：基于 date + filename 生成，文章内容不变则 URL 永不变（新增文章不影响旧文章 URL）
+const hashCode = str => { let h = 0; for (let i = 0; i < str.length; i++) h = ((h << 5) - h + str.charCodeAt(i)) | 0; return Math.abs(h).toString(36).padStart(4, '0').slice(0, 4); };
+const slug = a => { const base = a.date.replace(/-/g, ''); const key = (a.filename || a.source || a.title).replace(/\.md$/, ''); return '/post/' + base + '-' + hashCode(key) + '.html'; };
 
 const CSS = GHIBLI_CSS;
 const headerBar = (base = '') => `${GHIBLI_SKY}<header><div class="wrap"><a class="site-logo" href="${base}index.html">${SITE_NAME}</a><nav><a href="${base}about.html" class="nav-hl">我是谁</a><a href="${base}index.html">首页</a><a href="${base}topics.html">主题</a><a href="${base}map.html">内容地图</a><a href="${base}archive.html">全部文章</a><a href="${base}search.html">搜索</a></nav></div></header>`;
@@ -79,10 +81,10 @@ const renderMD = md => {
 fs.mkdirSync(OUT, { recursive: true });
 fs.mkdirSync(path.join(OUT, 'post'), { recursive: true });
 
-for (const a of clean) a._url = slug();
+for (const a of clean) a._url = slug(a);
 
-const safeHref = a => a.source ? a.source : a._url;
-const card = a => `<a class="card" href="${safeHref(a)}" target="_blank" rel="noopener"><div class="card-meta"><time>${a.date}</time><span class="acct">${esc(a.account)}</span></div><h3>${esc(a.title)}</h3><p>${esc(a.description.slice(0,90))}</p><div class="tags">${a.tags.slice(0,3).map(t=>'<span>'+esc(t.split('/').pop())+'</span>').join('')}</div></a>`;
+const safeHref = (a, base) => a.source ? a.source : (base + a._url.replace(/^\//, ''));
+const card = (a, base='') => `<a class="card" href="${safeHref(a, base)}" target="_blank" rel="noopener"><div class="card-meta"><time>${a.date}</time><span class="acct">${esc(a.account)}</span></div><h3>${esc(a.title)}</h3><p>${esc(a.description.slice(0,90))}</p><div class="tags">${a.tags.slice(0,3).map(t=>'<span>'+esc(t.split('/').pop())+'</span>').join('')}</div></a>`;
 
 for (const a of clean) {
   const jumpTip = a.source ? `<div class="jump-banner"><p>本文正在跳转到公众号原文…</p><a class="btn" href="${esc(a.source)}" target="_blank" rel="noopener">如果未自动跳转，请点击这里</a></div>` : '';

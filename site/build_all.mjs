@@ -22,3 +22,7 @@ for (const [file, label] of steps) {
   execSync('node ' + file, { stdio: 'inherit', cwd: here });
 }
 console.log('\n✅ 全站构建完成，docs/ 已更新');
+
+// 终态：旧序号 URL → 稳定 URL 重定向 + 清理残留
+process.stdout.write('▶ 旧URL重定向/清理 (add_redirects.mjs)\n');
+execSync('node add_redirects.mjs', { stdio: 'inherit', cwd: here });

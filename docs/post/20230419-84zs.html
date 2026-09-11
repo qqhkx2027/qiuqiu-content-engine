@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>最近好忙！8小时极限生活作息 · 秋秋很开心</title><meta name="description" content="秋秋分享自己的8小时生活安排：用多个两小时区块切换阅读、生活和兴趣，在不上班的状态下保持充实、规律和持续学习。"><meta property="og:title" content="最近好忙！8小时极限生活作息 · 秋秋很开心"><meta property="og:description" content="秋秋分享自己的8小时生活安排：用多个两小时区块切换阅读、生活和兴趣，在不上班的状态下保持充实、规律和持续学习。"><meta property="og:type" content="website"><meta property="og:site_name" content="秋秋很开心"><link rel="icon" href="../favicon.svg" type="image/svg+xml"><meta property="og:image" content="https://qqhkx2027.github.io/qiuqiu-content-engine/og-card.svg"><meta name="twitter:card" content="summary"><meta http-equiv="refresh" content="0;url=https://mp.weixin.qq.com/s/dVzEILXgPkkWHc6TDxca_Q"><style>/* 吉卜力水彩主题 — 全站共享 */
+:root{
+  --sky:#e9f2ec; --cream:#fdf9f0; --paper:#fffdf6;
+  --green:#5b7f63; --green-deep:#4c6f52; --blue:#6f9bb5;
+  --yellow:#f2d98a; --terracotta:#cf855f; --brown:#8a6f52; --ink:#3b3a34; --line:#e4dbc4;
+  --shadow:0 8px 24px rgba(80,90,60,.12);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;color:var(--ink);
+  line-height:1.75;background:linear-gradient(180deg,#e9f2ec 0%,#f6f8e8 45%,#fdf9f0 75%);min-height:100vh;}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px;position:relative;z-index:2}
+
+/* 天空与山丘装饰 */
+.sky{position:relative;height:96px;overflow:hidden;pointer-events:none;background:linear-gradient(180deg,#dff0f7 0%,#eef7ea 100%);}
+.cloud{position:absolute;background:#fff;border-radius:999px;filter:blur(1px)}
+.cloud:before,.cloud:after{content:'';position:absolute;background:#fff;border-radius:50%}
+.cloud.c1{width:120px;height:34px;left:7%;top:22px;animation:drift 30s linear infinite}
+.cloud.c1:before{width:46px;height:46px;left:20px;top:-24px}
+.cloud.c1:after{width:38px;height:38px;right:18px;top:-16px}
+.cloud.c2{width:78px;height:26px;right:14%;top:38px;animation:drift 40s linear infinite reverse;opacity:.75}
+.cloud.c2:before{width:32px;height:32px;left:14px;top:-18px}
+.cloud.c2:after{width:26px;height:26px;right:12px;top:-12px}
+.sun{position:absolute;right:12%;top:10px;width:46px;height:46px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#fff6c9,#f6cf6b);box-shadow:0 0 28px rgba(246,207,107,.6)}
+.hill{position:relative;height:46px;background:
+  radial-gradient(60% 120% at 12% 100%,#9cbf93 0 68%,transparent 69%),
+  radial-gradient(45% 115% at 40% 100%,#b3cf9f 0 66%,transparent 67%),
+  radial-gradient(55% 130% at 70% 100%,#8fba8b 0 65%,transparent 66%),
+  radial-gradient(40% 90% at 92% 100%,#a8c99b 0 62%,transparent 63%)}
+@keyframes drift{from{transform:translateX(-30px)}to{transform:translateX(90px)}}
+
+header{position:sticky;top:0;z-index:20;background:rgba(255,253,246,.88);backdrop-filter:blur(10px);border-bottom:1.5px solid var(--line)}
+header .wrap{display:flex;justify-content:space-between;align-items:center;padding:10px 24px}
+.site-logo{font-weight:800;color:var(--green-deep);font-size:17px;letter-spacing:.5px}
+nav a{margin-left:16px;color:var(--ink);font-size:14px;font-weight:500}
+nav a:hover{color:var(--green-deep)}
+nav a.nav-hl{color:var(--terracotta);font-weight:800;border-bottom:2px solid var(--terracotta);padding-bottom:2px}
+
+.hero{padding:42px 0 28px;text-align:center}
+.hero h1{font-size:40px;margin:0 0 10px;color:var(--green-deep);letter-spacing:1px}
+.tagline{color:var(--ink);font-size:16px;opacity:.85}
+.stats{margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.stats span{background:var(--paper);border:1.5px solid var(--line);border-radius:999px;padding:6px 16px;font-size:14px;color:var(--green-deep);font-weight:600}
+.hero-actions{display:flex;gap:14px;justify-content:center;margin-top:26px;flex-wrap:wrap}
+.btn{background:var(--green-deep);color:#fff;border-radius:999px;padding:11px 26px;font-size:15px;font-weight:700;display:inline-block;box-shadow:0 5px 14px rgba(76,111,82,.35);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(76,111,82,.45)}
+.btn.outline{background:transparent;border:2px solid var(--green-deep);color:var(--green-deep);box-shadow:none}
+.btn.outline:hover{background:rgba(91,127,99,.08)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px;padding:10px 0 64px}
+.card{background:var(--paper);border:1.5px solid var(--line);border-radius:20px 12px 20px 12px;padding:20px 22px;display:block;position:relative;overflow:hidden;transition:.18s;box-shadow:0 4px 12px rgba(90,100,70,.08)}
+.card:before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--terracotta),var(--yellow),var(--green),#6f8ba5);opacity:.8}
+.card:hover{transform:translateY(-5px) rotate(-.4deg);box-shadow:0 14px 32px rgba(90,100,70,.16)}
+.card-meta{display:flex;justify-content:space-between;font-size:12.5px;color:var(--brown,#8b7f6b);margin-bottom:9px}
+.card h3{font-size:16.5px;margin:0 0 8px;line-height:1.5}
+.card p{font-size:13.5px;color:#6f6758;margin:0 0 12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card .tags span{background:#f3efe2;border-radius:8px;padding:2px 9px;font-size:11.5px;color:var(--brown);margin-right:6px;font-weight:600}
+.year-head{font-size:21px;color:var(--green-deep);margin:38px 0 18px;font-weight:800}
+.year-head:before{content:'☘';color:var(--terracotta);margin-right:8px}
+h2.yhead{font-size:20px;color:var(--green-deep);margin:34px 0 14px;border-bottom:2px solid var(--line);padding-bottom:8px}
+
+.post-title{font-size:30px;color:var(--green-deep);margin:18px 0 4px;line-height:1.4}
+.post-meta{color:#8b7f6b;font-size:14px;margin:6px 0 12px}
+.post-desc{color:#6f6758;font-size:15px;background:rgba(255,253,246,.7);border-left:4px solid var(--yellow);padding:8px 14px;border-radius:0 12px 12px 0}
+.post-body{background:var(--paper);border:1.5px solid var(--line);border-radius:20px;padding:28px;margin:20px 0;box-shadow:var(--shadow)}
+.post-body p{margin:0 0 16px;font-size:15.5px;line-height:1.9}
+.post-body img{max-width:100%;border-radius:14px;margin:10px 0;box-shadow:0 6px 18px rgba(90,100,70,.15)}
+.post-body blockquote{border-left:4px solid var(--terracotta);margin:0 0 16px;padding:14px 18px;color:#6f6758;background:#fbf5ea;border-radius:0 12px 12px 0}
+.post-body h3,.post-body h4{color:var(--green-deep);margin:22px 0 10px}
+.back{color:var(--green-deep);font-size:14px}
+.post-nav{display:flex;justify-content:space-between;gap:16px;margin:26px 0}
+.post-nav a{color:var(--green-deep);font-weight:600}
+.post-footer{margin:22px 0 60px}
+.post-footer a{background:var(--terracotta);color:#fff;border-radius:999px;padding:11px 30px;font-weight:700;display:inline-block}
+
+.dash,.topic{background:var(--paper);border:1.5px solid var(--line);border-radius:18px 12px}
+.bar{background:#efe7d6;border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--terracotta),var(--yellow))}
+.gap{border-radius:12px;padding:8px 12px;font-size:13px;margin:10px 0 0}
+.gap.warn{background:#fdf3e0;border:1px solid #eed9a8;color:#8a6f3b}
+.gap.ok{background:#eff5e9;border:1px solid #d2e3c5;color:#5d7a4f}
+.hint{background:#fbf6ea;border:1px solid #efe0ba;border-radius:14px;padding:12px 18px;font-size:13px;color:#7a733b;margin-top:12px}
+
+.searchbar{display:flex;justify-content:center;gap:10px;margin:28px 0 6px}
+.searchbar input{width:min(480px,100%);padding:12px 22px;border:1.5px solid #ddd0a8;border-radius:999px;font-size:15px;background:#fffdf9;outline:none}
+.searchbar input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(91,127,99,.16)}
+.searchbar button{background:var(--green-deep);color:#fff;border:none;border-radius:999px;padding:0 26px;font-size:15px;font-weight:700;cursor:pointer}
+footer{text-align:center;color:var(--brown);font-size:13px;padding:34px 0 44px;background:linear-gradient(180deg,transparent,#e6f0dc)}
+footer .foot-nav{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+footer .foot-nav a{color:var(--green-deep);font-weight:600;font-size:13.5px;border-bottom:1px dashed transparent;padding-bottom:2px}
+footer .foot-nav a:hover{border-bottom-color:var(--green-deep)}
+footer .foot-line{opacity:.9}
+@media(max-width:640px){.hero h1{font-size:28px}.grid{grid-template-columns:1fr}nav a{margin-left:10px;font-size:13px}}
+</style></head><body><div class="sky"><span class="cloud c1"></span><span class="cloud c2"></span><span class="sun"></span></div><div class="hill"></div><header><div class="wrap"><a class="site-logo" href="../index.html">秋秋很开心</a><nav><a href="../about.html" class="nav-hl">我是谁</a><a href="../index.html">首页</a><a href="../topics.html">主题</a><a href="../map.html">内容地图</a><a href="../archive.html">全部文章</a><a href="../search.html">搜索</a></nav></div></header><main class="wrap"><article class="post"><div class="jump-banner"><p>本文正在跳转到公众号原文…</p><a class="btn" href="https://mp.weixin.qq.com/s/dVzEILXgPkkWHc6TDxca_Q" target="_blank" rel="noopener">如果未自动跳转，请点击这里</a></div><a class="back" href="../index.html">← 返回首页</a><h1 class="post-title">最近好忙！8小时极限生活作息</h1><div class="post-meta"><time>2023-04-19</time> · 秋秋在分享 · 710 字 · 约2 分钟阅读</div><p class="post-desc">秋秋分享自己的8小时生活安排：用多个两小时区块切换阅读、生活和兴趣，在不上班的状态下保持充实、规律和持续学习。</p><div class="post-body"><h3>最近好忙！8小时极限生活作息</h3>
+<p>原创 秋秋 秋秋在分享 2023-04-19 14:35 北京</p>
+<blockquote>原文地址: [https://mp.weixin.qq.com/s/dVzEILXgPkkWHc6TDxca\_Q](https://mp.weixin.qq.com/s/dVzEILXgPkkWHc6TDxca_Q)</blockquote>
+<p>大家好，我是秋秋！</p>
+<p>最近属实是很有干劲了，又重新调整了一下作息。</p>
+<p>一直强调我是个懒人，起床还是10点到11点自然醒，之后简单吃点，就开始极限一天：</p>
+<p>12-14点，学技能</p>
+<p>14-16点，看书</p>
+<p>16-18点，写作</p>
+<p>18-20点，吃饭（遛狗）</p>
+<p>每个都是2小时，可以随意切换，不一定按照上面的顺序。</p>
+<p>20点之后没安排，是男朋友就下班了，一起看看电视聊聊天。</p>
+<p>妈呀，我发现8小时根本不够用！</p>
+<p>我为什么这么安排？</p>
+<p>是我探索发现，看书真的能带给我最极致简单的快乐！！！</p>
+<p>所以我要每天看。</p>
+<p>我最近的书单也和大家分享下：</p>
+<img loading="lazy" src="https://mmbiz.qpic.cn/mmbiz_jpg/RV0rqC6kCjiakoK1B9Iy03CK9KF09xKLydBxjus8gJibBBnx8s9uVWwT1Uibia3BpsObNdvyktxnGFmLaryet0wibOw/640?wx_fmt=jpeg" alt="">
+<p>​</p>
+<p>加缪，黑塞，庄子，老子，汪曾祺，三毛，余华，叔本华，毛姆……</p>
+<p>我喜欢的就是热爱生活小事，不断探索灵魂，哪怕经历烂透了的一切，也有那种完全生命力的人（故事）。</p>
+<p>大自然也是我爱的，可以傍晚遛狗，我楼下小区里还有喷泉，小孩，玩滑板的少年，出门就是烟火气。</p>
+<p>学技能是每周一个新尝试，这周是简笔画，大老王说明显看到进步。</p>
+<p>我不求有什么成就，在这段时间里我是开心的就可以了：</p>
+<img loading="lazy" src="https://mmbiz.qpic.cn/mmbiz_jpg/RV0rqC6kCjiakoK1B9Iy03CK9KF09xKLyEYQKodxCAVxAjL8Bicksicx2d9ibZI9hdvMibRiblyTZkFYic6ia3P3GqKUKg/640?wx_fmt=jpeg" alt="">
+<p>​</p>
+<img loading="lazy" src="https://mmbiz.qpic.cn/mmbiz_jpg/RV0rqC6kCjiakoK1B9Iy03CK9KF09xKLyQVg2LOrYOhMn80Ghg60O3MHaSQTKZtNPBn5DAscfGHfkUqPYx6X9zg/640?wx_fmt=jpeg" alt="">
+<p>​</p>
+<p>写作不多说，我要把fire的攻略写一下，还有日常也会分享我做了啥。</p>
+<p>以上都是输入，我也要做点输出工作。</p>
+<p>这样的一天就跟忙碌了。</p>
+<p>今天和fire退休的朋友聊天，他们讨论通货膨胀，我觉得我这方面心态比较好，就是以上吧。</p>
+<p>1.我有很多不通过消费获得的快乐，那我就不那么需要钱</p>
+<p>2.我一直都在尝试，总是有可能再赚到钱</p>
+<p>反正买好了保险，做好了保障，存够了基础花销，快乐生活又不是“不务正业”，我就按照我的理想过一生啦。</p></div><nav class="post-nav"><div class="post-nav-item"><a href="20230421-bn4l.html">← Fire财富篇｜存多少钱才能财务自由？（普通人版）</a></div><div class="post-nav-item right"><a href="20230413-j9sm.html">我活这些年第一次见，小众省力App来啦！ →</a></div></nav><div class="post-footer"><a href="https://mp.weixin.qq.com/s/dVzEILXgPkkWHc6TDxca_Q" target="_blank" rel="noopener">在公众号阅读原文</a></div></article></main><footer><div class="foot-nav"><a href="about.html">认识秋秋</a><a href="map.html">内容地图</a><a href="archive.html">全部文章</a><a href="opportunity.html">我会继续写什么</a><a href="rss.xml">RSS 订阅</a></div><div class="foot-line">© 2026 秋秋很开心 · 秋秋在分享 · 全部内容为秋秋原创，卡片可跳转公众号原文</div></footer></body></html>
