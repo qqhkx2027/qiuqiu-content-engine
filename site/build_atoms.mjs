@@ -64,7 +64,7 @@ import { ATOMS_EXTRA } from './theme_extra.mjs';
  fs.writeFileSync(path.join(OUT, 'content_atoms.json'), JSON.stringify({ total, byType, topics, atoms: rows }));
 const CSS = GHIBLI_CSS + ATOMS_EXTRA;
 const NAV = '<a href="index.html">首页</a><a href="topics.html">主题</a><a href="map.html">内容地图</a><a href="archive.html">全部文章</a><a href="search.html">搜索</a><a class="nav-hl" href="about.html">我是谁</a></nav>';
-const HEADER = GHIBLI_SKY + '<header><div class="wrap"><a class="site-logo" href="index.html">秋秋很开心</a><a <nav>href="index.html">首页</a><a href="topics.html">主题</a><a href="map.html">内容地图</a><a href="archive.html">全部文章</a><a href="search.html">搜索</a><a class="nav-hl" href="about.html">我是谁</a></nav></div></header>';
+const HEADER = GHIBLI_SKY + '<header><div class="wrap"><a class="site-logo" href="index.html">秋秋很开心</a><nav>href="index.html">首页</a><a href="topics.html">主题</a><a href="map.html">内容地图</a><a href="archive.html">全部文章</a><a href="search.html">搜索</a><a class="nav-hl" href="about.html">我是谁</a></nav></div></header>';
 const FOOTER = GHIBLI_FOOTER;
  const statHtml = TYPES.map(t => '<div class="card"><div class="n">' + (byType[t] || 0) + '</div><div class="l">' + TYPE_LABEL[t] + ' 原子</div></div>').join('') + '<div class="card"><div class="n">' + total + '</div><div class="l">原子总数</div></div>';
  const topicHtml = topics.map(t => {

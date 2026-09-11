@@ -64,12 +64,12 @@ const levelOrder = { go: 0, gap: 1, trend: 2, revive: 3 };
 opps.sort((a,b)=> levelOrder[a.level]-levelOrder[b.level]);
 // ---- 内容地图 ----
 const TOPICS = [
-  { name: '生活方式', match: ['生活方式', '旅行', '情感'] },
-  { name: '自我成长', match: ['自我成长', '方法教程', '经验分享', '个人复盘'] },
-  { name: '读书', match: ['读书', '书单推荐'] },
-  { name: 'AI 与工具', match: ['AI'] },
-  { name: '好物分享', match: ['好物', '好物推荐'] },
-  { name: '财务自由', match: ['理财', '搞钱', '存钱', '提前退休', '理财分析'] },
+  { name: '生活方式', why: '普通家庭怎么过得舒服又体面，是我一直在试的事', match: ['生活方式', '旅行', '情感'] },
+  { name: '自我成长', why: '不追求成为更卷的人，只想成为更清醒的人', match: ['自我成长', '方法教程', '经验分享', '个人复盘'] },
+  { name: '读书', why: '读过的书，变成真正改变生活的东西', match: ['读书', '书单推荐'] },
+  { name: 'AI 与工具', why: '折腾工具，但最终还是为了让生活更简单', match: ['AI'] },
+  { name: '好物分享', why: '少买一点，但每一样都真的喜欢', match: ['好物', '好物推荐'] },
+  { name: '财务自由', why: '钱不是终点，是换取选择权的工具', match: ['理财', '搞钱', '存钱', '提前退休', '理财分析'] },
 ];
 const assigned = clean.map(a => ({ ...a, topics: TOPICS.filter(t => a.tags.some(tag => t.match.includes(tag) || t.match.some(m => tag.includes(m)))).map(t => t.name) }));
 const topicStats = TOPICS.map(tp => {
@@ -77,7 +77,7 @@ const topicStats = TOPICS.map(tp => {
   const recent = posts.filter(a => monthsAgo(a.date) <= 24).length;
   return { name: tp.name, count: posts.length, recent, latest: posts.length ? posts[0].date : null,
     avgWc: posts.length ? Math.round(posts.reduce((s,a)=>s+a.wc,0) / posts.length) : 0,
-    topTitles: posts.slice(0, 5).map(a => a.title) };
+    why: tp.why, topTitles: [...posts.filter(a => a.topics.length === 1), ...posts.filter(a => a.topics.length > 1)].slice(0, 5).map(a => a.title) };
 });
 const pairs = [];
 for (let i = 0; i < TOPICS.length; i++) for (let j = i+1; j < TOPICS.length; j++) {
@@ -89,12 +89,12 @@ pairs.sort((a,b)=>b.count-a.count);
 const bar = (n,max) => '<div class="bar"><i style="width:'+Math.round(n/(max||1)*100)+'%"></i></div>';
 const CSS = GHIBLI_CSS + INTEL_EXTRA;
 const NAV = '<a href="index.html">首页</a><a href="topics.html">主题</a><a href="map.html">内容地图</a><a href="archive.html">全部文章</a><a href="search.html">搜索</a><a class="nav-hl" href="about.html">我是谁</a></nav>';
-const HEADER = GHIBLI_SKY + '<header><div class="wrap"><a class="site-logo" href="index.html">秋秋很开心</a><a <nav>href="index.html">首页</a><a href="topics.html">主题</a><a href="map.html">内容地图</a><a href="archive.html">全部文章</a><a href="search.html">搜索</a><a class="nav-hl" href="about.html">我是谁</a></nav></div></header>';
+const HEADER = GHIBLI_SKY + '<header><div class="wrap"><a class="site-logo" href="index.html">秋秋很开心</a><nav><a href="index.html">首页</a><a href="topics.html">主题</a><a href="map.html">内容地图</a><a href="archive.html">全部文章</a><a href="search.html">搜索</a><a class="nav-hl" href="about.html">我是谁</a></nav></div></header>';
 const FOOTER = GHIBLI_FOOTER;
 const page = (title, htitle, desc, body) => '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>'+title+' · 秋秋很开心</title><style>'+CSS+'</style></head><body>'+HEADER+'<main class="wrap"><div class="hero"><h1>'+htitle+'</h1><p class="tagline">'+desc+'</p></div>'+body+'</main>'+FOOTER+'</body></html>';
 const maxN = Math.max(...topicStats.map(t => t.count));
 const dashCards = topicStats.map(t => '<div class="card"><h3>'+esc(t.name)+'</h3><div class="n">'+t.count+'</div><div class="sub">近 2 年 '+t.recent+' 篇 · 最新 '+esc(t.latest)+'</div>'+bar(t.count,maxN)+'</div>').join('');
-const mapCards = topicStats.map(t => '<div class="tp"><h3>'+esc(t.name)+'</h3><div class="cnt">'+t.count+' 篇 · 最新 '+esc(t.latest)+'</div>'+bar(t.count,maxN)+'<div class="meta">均长 '+t.avgWc+' 字 · 近2年 '+t.recent+' 篇</div><details><summary>代表文章</summary>'+t.topTitles.map(x=>'<div class="tl">· '+esc(x)+'</div>').join('')+'</details></div>').join('');
+const mapCards = topicStats.map(t => '<div class="tp"><h3>'+esc(t.name)+'</h3><div class="why">'+esc(t.why)+'</div><div class="cnt">'+t.count+' 篇 · 最新 '+esc(t.latest)+'</div>'+bar(t.count,maxN)+'<div class="meta">均长 '+t.avgWc+' 字 · 近2年 '+t.recent+' 篇</div><details><summary>代表文章</summary>'+t.topTitles.map(x=>'<div class="tl">· '+esc(x)+'</div>').join('')+'</details></div>').join('');
 const maxCross = pairs.length ? Math.max(...pairs.map(p=>p.count)) : 1;
 const mapBody = '<h2 class="yhead">主题总览</h2><div class="dash">'+dashCards+'</div><h2 class="yhead">主题全景与代表内容</h2><div class="map-grid">'+mapCards+'</div><h2 class="yhead">主题交叉（已有内容）</h2><div class="map-grid">'+pairs.slice(0,6).map(p=>'<div class="tp"><h3>'+esc(p.t1+' × '+p.t2)+'</h3><div class="cnt">'+p.count+' 篇 · 最近 '+esc(p.latest)+'</div>'+bar(p.count,maxCross)+'</div>').join('')+'</div>';
 const mapHtml = page('内容地图','内容地图','502 篇文章的分布与交叉', mapBody);
