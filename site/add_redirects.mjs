@@ -1,7 +1,7 @@
-// 职责：为旧序号 URL（/post/0001.html）生成重定向到稳定 URL，并清理 post/ 下残留旧文件
+// 职责：为旧序号 URL（/post/0001.html）生成重定向到稳定 URL，并清理孤儿文件
+// 迁移映射固化在 config/url_migrations.json（不依赖 git 历史，CI 可直接使用）
 import fs from 'node:fs';
 import path from 'node:path';
-import { execSync } from 'node:child_process';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const OUT = path.join(ROOT, 'docs');
@@ -10,47 +10,40 @@ const postDir = path.join(OUT, 'post');
 const cur = JSON.parse(fs.readFileSync(path.join(OUT, 'urls.json'), 'utf8'));
 const curByFile = new Map(cur.map(x => [x.filename, x.url]));
 
-let old = [];
+// 1) 读取固定迁移映射 { oldRel: newRel }
+const mig = {};
 try {
-  let rev = 'HEAD';
-  const headU = JSON.parse(execSync('git show HEAD:docs/urls.json', { cwd: ROOT, encoding: 'utf8' }));
-  if (headU.length && headU[0].url && !/\/post\/\d{4}.html/.test(headU[0].url)) {
-    // HEAD 已是新格式（YYYYMMDD-hash），找历史里最近的旧格式清单
-    const log = execSync(`git log --format=%H -- docs/urls.json`, { cwd: ROOT, encoding: 'utf8' }).trim().split('\n');
-    for (const c of log) {
-      try {
-        const u = JSON.parse(execSync(`git show ${c}:docs/urls.json`, { cwd: ROOT, encoding: 'utf8' }));
-        if (u.length && /\d{4}.html/.test(u[0].url)) { old = u; break; }
-      } catch (_) {}
-    }
-  } else {
-    old = headU;
-  }
-} catch (e) {
-  console.log('旧文件不存在，跳过重定向生成');
-}
+  const migPath = path.join(ROOT, 'config/url_migrations.json');
+  if (fs.existsSync(migPath)) Object.assign(mig, JSON.parse(fs.readFileSync(migPath, 'utf8')));
+} catch (e) {}
 
 const newNames = new Set(cur.map(x => x.url.replace(/^\//, '')));
 let redir = 0, removed = 0;
 
-for (const o of old) {
-  const nu = curByFile.get(o.filename);
-  if (!nu || nu === o.url) continue;
-  const oldPath = path.join(OUT, o.url.replace(/^\//, ''));
-  const rel = nu.replace(/^\//, '');
-  const redirHtml = '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="refresh" content="0;url=' + rel + '"><title>跳转中 · 秋秋</title></head><body style="font-family:sans-serif;padding:60px;text-align:center;background:#fdf9f0"><p>文章已迁移到新地址</p><a href="' + rel + '" style="color:#5b7f63;font-weight:700">点击进入新文章页 →</a></body></html>';
-  fs.writeFileSync(oldPath, redirHtml);
+// 2) 为旧 URL 生成重定向页（相对路径，兼容子路径部署）
+for (const [oldRel, newRel] of Object.entries(mig)) {
+  if (newRel && !newNames.has(newRel)) continue; // 目标已不存在则跳过
+  const oldPath = path.join(postDir, oldRel);
+  // 若旧文件已经就是新文章页（无迁移必要）跳过
+  if (newNames.has(oldRel)) continue;
+  if (oldRel === newRel) continue;
+  const redirHtml = '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="refresh" content="0;url=' + newRel + '"><title>跳转中 · 秋秋</title></head><body style="font-family:sans-serif;padding:60px;text-align:center;background:#fdf9f0"><p>文章已迁移到新地址</p><a href="' + newRel + '" style="color:#5b7f63;font-weight:700">点击进入新文章页 →</a></body></html>';
+  fs.writeFileSync(path.join(OUT, oldRel), redirHtml);
   redir++;
 }
 
-// 清理 post/ 下既不是当前新URL、也没有被写成重定向页的残留（旧清单里没有的孤儿文件）
+// 3) 清理孤儿：既不是当前新URL、也不是迁移源/目标 且没有重定向内容
 for (const f of fs.readdirSync(postDir)) {
   if (f === '.gitkeep') continue;
   const rel = 'post/' + f;
   if (newNames.has(rel)) continue;
-  const isOld = old.some(o => o.url.replace(/^\//, '') === rel);
-  if (isOld) continue; // 已经是重定向页，保留
+  if (Object.prototype.hasOwnProperty.call(mig, rel)) continue; // 作为迁移源保留
+  try {
+    const content = fs.readFileSync(path.join(postDir, f), 'utf8');
+    if (content.includes('article已迁移') || content.includes('http-equiv="refresh"')) continue; // 已是重定向页
+  } catch (_) {}
   fs.unlinkSync(path.join(postDir, f));
   removed++;
 }
 console.log('redirects:', redir, '| orphans removed:', removed);
+
