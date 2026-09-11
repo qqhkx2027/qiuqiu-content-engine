@@ -35,6 +35,7 @@ header .wrap{display:flex;justify-content:space-between;align-items:center;paddi
 .site-logo{font-weight:800;color:var(--green-deep);font-size:17px;letter-spacing:.5px}
 nav a{margin-left:16px;color:var(--ink);font-size:14px;font-weight:500}
 nav a:hover{color:var(--green-deep)}
+nav a.nav-hl{color:var(--terracotta);font-weight:800;border-bottom:2px solid var(--terracotta);padding-bottom:2px}
 
 .hero{padding:42px 0 28px;text-align:center}
 .hero h1{font-size:40px;margin:0 0 10px;color:var(--green-deep);letter-spacing:1px}
@@ -86,7 +87,11 @@ h2.yhead{font-size:20px;color:var(--green-deep);margin:34px 0 14px;border-bottom
 .searchbar input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(91,127,99,.16)}
 .searchbar button{background:var(--green-deep);color:#fff;border:none;border-radius:999px;padding:0 26px;font-size:15px;font-weight:700;cursor:pointer}
 footer{text-align:center;color:var(--brown);font-size:13px;padding:34px 0 44px;background:linear-gradient(180deg,transparent,#e6f0dc)}
+footer .foot-nav{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+footer .foot-nav a{color:var(--green-deep);font-weight:600;font-size:13.5px;border-bottom:1px dashed transparent;padding-bottom:2px}
+footer .foot-nav a:hover{border-bottom-color:var(--green-deep)}
+footer .foot-line{opacity:.9}
 @media(max-width:640px){.hero h1{font-size:28px}.grid{grid-template-columns:1fr}nav a{margin-left:10px;font-size:13px}}
 `;
 export const GHIBLI_SKY = '<div class="sky"><span class="cloud c1"></span><span class="cloud c2"></span><span class="sun"></span></div><div class="hill"></div>';
-export const GHIBLI_FOOTER = '<footer>© 2026 秋秋很开心 · 公众号文章存档 · 全部内容为秋秋原创</footer>';
+export const GHIBLI_FOOTER = "<footer><div class=\"foot-nav\"><a href=\"about.html\">认识秋秋</a><a href=\"map.html\">内容地图</a><a href=\"archive.html\">全部文章</a><a href=\"opportunity.html\">我会继续写什么</a><a href=\"rss.xml\">RSS 订阅</a></div><div class=\"foot-line\">© 2026 秋秋很开心 · 秋秋在分享 · 全部内容为秋秋原创</div></footer>"

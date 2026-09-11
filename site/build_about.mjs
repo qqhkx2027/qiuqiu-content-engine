@@ -88,7 +88,7 @@ const css = `
 
 const page = ['<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>认识秋秋 · 秋秋很开心</title><meta name="description" content="秋秋的个人主页：一个普通人的自由生活实验">',
   '<style>', GHIBLI_CSS, css, '</style>',
-  '</head><body>', GHIBLI_SKY, '<header><div class="wrap"><a class="site-logo" href="index.html">秋秋很开心</a><nav><a href="index.html">首页</a><a href="topics.html">主题</a><a href="map.html">内容地图</a><a href="opportunity.html">选题机会</a><a href="atoms.html">内容原子</a><a href="archive.html">全部文章</a><a href="about.html">认识秋秋</a><a href="search.html">搜索</a></nav></div></header>',
+  '</head><body>', GHIBLI_SKY, '<header><div class="wrap"><a class="site-logo" href="index.html">秋秋很开心</a><nav><a href="index.html">首页</a><a href="topics.html">主题</a><a href="map.html">内容地图</a><a href="archive.html">全部文章</a><a href="search.html">搜索</a><a class="nav-hl" href="about.html">我是谁</a></nav></div></header>',
   '<main class="wrap">', hero, story, research, evidence, onboard, explore, '</main>', GHIBLI_FOOTER, '</body></html>'].join('');
 
 fs.writeFileSync(path.join(OUT, 'about.html'), page);

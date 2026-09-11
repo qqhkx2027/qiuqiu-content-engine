@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<defs>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#dff0f7"/><stop offset="0.6" stop-color="#eef7ea"/><stop offset="1" stop-color="#fdf9f0"/>
+</linearGradient>
+<linearGradient id="hill" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#9cbf93"/><stop offset="1" stop-color="#7fa37a"/>
+</linearGradient>
+</defs>
+<rect width="1200" height="630" fill="url(#sky)"/>
+<circle cx="930" cy="130" r="72" fill="#f6cf6b" opacity="0.85"/>
+<circle cx="930" cy="130" r="100" fill="#f6cf6b" opacity="0.25"/>
+<circle cx="240" cy="170" r="56" fill="#fff" opacity="0.7"/>
+<circle cx="990" cy="230" r="38" fill="#fff" opacity="0.6"/>
+<path d="M0,500 C180,430 320,470 480,440 C640,410 760,470 960,440 L1200,470 L1200,630 L0,630 Z" fill="#b3cf9f"/>
+<path d="M0,540 C240,480 420,540 640,520 C840,500 980,550 1200,530 L1200,630 L0,630 Z" fill="url(#hill)"/>
+<rect x="0" y="560" width="1200" height="70" fill="#e6f0dc"/>
+<text x="120" y="180" font-family="PingFang SC,Microsoft YaHei,sans-serif" font-size="76" font-weight="800" fill="#4c6f52">秋秋很开心</text>
+<text x="122" y="260" font-family="PingFang SC,Microsoft YaHei,sans-serif" font-size="34" fill="#8a6f52">把人生写成一场公开实验</text>
+<text x="122" y="330" font-family="PingFang SC,Microsoft YaHei,sans-serif" font-size="26" fill="#6f9bb5">502 篇原创 · 2018-2026 · 生活方式 / 自我成长 / AI 与工具 / 财务自由</text>
+</svg>
