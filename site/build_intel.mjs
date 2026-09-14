@@ -15,6 +15,8 @@ const clean = raw
     tags: (Array.isArray(a.tags) ? a.tags.map(t => t.trim()).filter(Boolean) : []).map(t => t.includes('/') ? t.split('/').pop() : t),
     ct: Array.isArray(a.content_type) ? a.content_type[0] : (a.content_type || ''),
     wc: Number(a.word_count) || 0,
+    pillars: Array.isArray(a.pillars) ? a.pillars : [],
+    preview: (a.content_preview || '').slice(0, 180),
   }))
   .sort((a, b) => (a.date < b.date ? 1 : -1));
 const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -117,8 +119,8 @@ for (let i = 0; i < TOPICS.length; i++) for (let j = i+1; j < TOPICS.length; j++
 pairs.sort((a,b)=>b.count-a.count);
 const bar = (n,max) => '<div class="bar"><i style="width:'+Math.round(n/(max||1)*100)+'%"></i></div>';
 const CSS = GHIBLI_CSS + INTEL_EXTRA;
-const NAV = '<a href="index.html">首页</a><a href="topics.html">主题</a><a href="map.html">内容地图</a><a href="archive.html">全部文章</a><a href="search.html">搜索</a><a class="nav-hl" href="about.html">我是谁</a></nav>';
-const HEADER = GHIBLI_SKY + '<header><div class="wrap"><a class="site-logo" href="index.html">秋秋很开心</a><nav><a href="index.html">首页</a><a href="topics.html">主题</a><a href="map.html">内容地图</a><a href="archive.html">全部文章</a><a href="search.html">搜索</a><a class="nav-hl" href="about.html">我是谁</a></nav></div></header>';
+const NAV = '<a href="index.html">首页</a><a href="topics.html">主题</a><a href="map.html">内容地图</a><a href="opportunity.html">选题机会</a><a href="potential.html">改写潜力</a><a href="archive.html">全部文章</a><a href="search.html">搜索</a><a class="nav-hl" href="about.html">我是谁</a></nav>';
+const HEADER = GHIBLI_SKY + '<header><div class="wrap"><a class="site-logo" href="index.html">秋秋很开心</a><nav><a href="index.html">首页</a><a href="topics.html">主题</a><a href="map.html">内容地图</a><a href="opportunity.html">选题机会</a><a href="potential.html">改写潜力</a><a href="archive.html">全部文章</a><a href="search.html">搜索</a><a class="nav-hl" href="about.html">我是谁</a></nav></div></header>';
 const FOOTER = GHIBLI_FOOTER;
 const page = (title, htitle, desc, body) => '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>'+title+' · 秋秋很开心</title><style>'+CSS+'</style></head><body>'+HEADER+'<main class="wrap"><div class="hero"><h1>'+htitle+'</h1><p class="tagline">'+desc+'</p></div>'+body+'</main>'+FOOTER+'</body></html>';
 const maxN = Math.max(...topicStats.map(t => t.count));
@@ -131,11 +133,30 @@ const oppBody = '<div class="legend"><span><i style="background:#4f8f5f"></i>建
 const oppHtml = page('选题机会','选题机会','从 502 篇历史里找「值得写但还没写」的切入点', oppBody);
 fs.writeFileSync(path.join(OUT,'map.html'), mapHtml);
 fs.writeFileSync(path.join(OUT,'opportunity.html'), oppHtml);
+// ---- 多平台改写潜力（Phase 3 前置：规则估分，零 LLM） ----
+const P_NUM = /[0-9０-９]/, P_YN = /(怎么|如何|为什么|多少钱|要不要|靠谱吗|值不值得|会不会|真的|能吗)/, P_LIST = /(清单|推荐|分享|种草|好物|攻略|步骤|方法|技巧|避坑|测评|合集|盘点)/, P_STORY = /(我|辞职|退休|不上班|FIRE|旅居|妈|老公|娃|北京|大理|钱|房|自由)/;
+const P_TYPE = { story:{xhs:.8,video:.8}, experience:{xhs:.7,video:.85}, opinion:{xhs:.4,video:.7}, list:{xhs:.9,video:.55}, tutorial:{xhs:.6,video:.8}, review:{xhs:.85,video:.55}, reflection:{xhs:.5,video:.6}, knowledge:{xhs:.35,video:.5} };
+const scored = clean.map(a => {
+  const t = a.title, base = P_TYPE[a.ct] || {xhs:.5,video:.6};
+  const xhs = Math.min(1, (base.xhs||.5)+ (P_LIST.test(t)? .18:0) + (P_NUM.test(t)? .07:0) + (a.pillars.includes('geek')? .06:0));
+  let video = Math.min(1, Math.max(0, (base.video||.6) + (P_YN.test(t)? .15:0) + (P_NUM.test(t)? .08:0) + (a.pillars.includes('growth')||a.pillars.includes('freedom')? .05:0) + (a.wc>2200? .15:(a.wc<600?-.1:0))));
+  const repost = Math.min(1, (a.ct==='experience'||a.ct==='reflection'? .7:.52) + (a.pillars.includes('ai')? .08:0) + (a.wc>2500? .12:0));
+  return { title:t, date:a.date, xhs, video, repost, ct:a.ct, wc:a.wc };
+});
+const P_NAMES = {freedom:'财务自由',lifestyle:'生活方式',growth:'自我成长',ai:'AI与工具',reading:'读书',geek:'好物分享'};
+const potTop = (key, lab, min=.55) => {
+  const rows = scored.filter(a => a[key] >= min).sort((a,b)=>b[key]-a[key]).slice(0,6);
+  return '<h2 class="yhead">'+lab+'</h2><ol class="opp">'+ rows.map((a,i)=>'<li><span class="badge">'+Math.round(a[key]*100)+' 分</span><span class="badge">'+a.date+'</span><h4>'+esc(a.title)+'</h4><p>'+a.wc+' 字 · '+esc(a.ct||'-')+'</p></li>').join('')+'</ol>';
+};
 // 结构化选题数据：供其它构建阶段（如首页「今日值得写」）复用
 fs.writeFileSync(path.join(OUT,'intel.json'), JSON.stringify({
   generatedAt: new Date().toISOString().slice(0,10),
   topics: topicStats.map(t => ({ name:t.name, count:t.count, recent:t.recent })),
   opps: opps.map(o => ({ level:o.level, name:o.name, title:o.title, reason:o.reason })),
 }));
+// 多平台改写潜力页面
+const potHtml = '<p class="hint" style="text-align:center">基于标题/类型/长度/主题的规则预估，挑出最适合改写迁移到其它平台的候选（不是人工结论）。</p>' +
+  potTop('xhs','小红书潜力 Top',.6) + potTop('video','视频口播潜力 Top',.6) + potTop('repost','公众号续篇/复利潜力 Top',.6) ;
+fs.writeFileSync(path.join(OUT,'potential.html'), page('多平台改写潜力','内容生产','把已有文章改写到 小红书 / 视频 / 公众号', potHtml));
 console.log('map done: '+topicStats.map(t=>t.name+":"+t.count).join(' '));
 console.log('pairs:',pairs.length,' opps:',opps.length, opps.map(o=>o.level).join(','));
