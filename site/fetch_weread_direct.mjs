@@ -94,10 +94,18 @@ const dateOf = (sec) => {
   }
   const shelf = await getJson(BASE + '/api/user/notebook');
   const books = Array.isArray(shelf) ? shelf : (shelf.books || []);
+  const isDebug = process.env.DEBUG_BOOKS === '1';
+  if (isDebug) {
+    console.log('DEBUG 书架前20条：');
+    for (const b of books.slice(0, 20)) {
+      const book = b.book || {};
+      console.log('  type=' + book.type, '| title=' + String(book.title || '').slice(0, 40), '| url=' + String(book.url || '').slice(0, 60));
+    }
+  }
   const candidates = books.filter((b) => {
-    const book = b.book || {};
-    const title = String(book.title || '');
-    return book.type === 3 && KNOWN_AUTHORS.some((x) => title.includes(x));
+  const book = b.book || {};
+  const title = String(book.title || '');
+  return book.type === 3 && KNOWN_AUTHORS.some((x) => title.includes(x));
   });
 
   console.log('书架文章数:', books.length, '匹配公众号数:', candidates.length);
