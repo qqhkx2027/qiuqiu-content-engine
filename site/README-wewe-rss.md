@@ -18,8 +18,8 @@ docker run -d --name wewe-rss \
   -e SERVER_ORIGIN_URL=http://你的服务器公网IP:4000 \
   -e CRON_EXPRESSION="0 */6 * * *" \
   -e FEED_MODE=fulltext \
-  -v wewe-rss-data:/app/data \
-  weev-rss/wewe-rss-sqlite:latest
+  -v ./data:/app/data \
+  cooderl/wewe-rss-sqlite:latest
 ```
 
 （拉不到镜像就加 `--platform linux/amd64` 或换 Docker 源）
