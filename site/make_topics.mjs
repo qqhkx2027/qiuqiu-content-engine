@@ -4,19 +4,15 @@ const OUT = path.join(import.meta.dirname, '..', 'docs');
 const URLS = JSON.parse(fs.readFileSync(path.join(OUT, 'urls.json'), 'utf8'));
 const urlByFile = new Map(URLS.map(u => [u.filename, u.url]));
 const ROOT_D = path.join(import.meta.dirname, '..', 'content/公众号/outputs/articles_data.json');
+const TAXONOMY = path.join(import.meta.dirname, '..', 'config/taxonomy.json');
 const articles = JSON.parse(fs.readFileSync(ROOT_D, 'utf8'));
+const tax = JSON.parse(fs.readFileSync(TAXONOMY, 'utf8'));
 const clean = articles
   .filter(a => a && a.title && a.date)
   .map(a => ({ ...a, _url: urlByFile.get(a.filename) || '', tags: Array.isArray(a.tags) ? a.tags.map(t => t.includes('/') ? t.split('/').pop() : t).filter(Boolean) : [] }))
   .sort((a, b) => (a.date < b.date ? 1 : -1));
-const TOPICS = [
-  { name: '生活方式', match: ['生活方式', '旅行', '情感'] },
-  { name: '自我成长', match: ['自我成长', '方法教程', '经验分享', '个人复盘'] },
-  { name: '读书', match: ['读书', '书单推荐'] },
-  { name: 'AI 与工具', match: ['AI'] },
-  { name: '好物分享', match: ['好物', '好物推荐'] },
-  { name: '财务自由', match: ['理财', '搞钱', '存钱', '提前退休', '理财分析'] },
-];
+// 主题单一真相来自 config/taxonomy.json（配置集中）
+const TOPICS = (tax.pillars || []).map(p => ({ name: p.name, match: p.aliases || [] }));
 const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const home = fs.readFileSync(path.join(OUT, 'index.html'), 'utf8');
 const css = home.match(/<style>([\s\S]*?)<\/style>/)[1];
