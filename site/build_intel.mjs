@@ -119,8 +119,8 @@ for (let i = 0; i < TOPICS.length; i++) for (let j = i+1; j < TOPICS.length; j++
 pairs.sort((a,b)=>b.count-a.count);
 const bar = (n,max) => '<div class="bar"><i style="width:'+Math.round(n/(max||1)*100)+'%"></i></div>';
 const CSS = GHIBLI_CSS + INTEL_EXTRA;
-const NAV = '<a href="index.html">首页</a><a href="topics.html">主题</a><a href="map.html">内容地图</a><a href="opportunity.html">选题机会</a><a href="potential.html">改写潜力</a><a href="archive.html">全部文章</a><a href="search.html">搜索</a><a class="nav-hl" href="about.html">我是谁</a></nav>';
-const HEADER = GHIBLI_SKY + '<header><div class="wrap"><a class="site-logo" href="index.html">秋秋很开心</a><nav><a href="index.html">首页</a><a href="topics.html">主题</a><a href="map.html">内容地图</a><a href="opportunity.html">选题机会</a><a href="potential.html">改写潜力</a><a href="archive.html">全部文章</a><a href="search.html">搜索</a><a class="nav-hl" href="about.html">我是谁</a></nav></div></header>';
+const NAV = '<a href="index.html">首页</a><a href="topics.html">主题</a><a href="map.html">内容地图</a><a href="timeline.html">时间线</a><a href="opportunity.html">选题机会</a><a href="potential.html">改写潜力</a><a href="archive.html">全部文章</a><a href="search.html">搜索</a><a class="nav-hl" href="about.html">我是谁</a></nav>';
+const HEADER = GHIBLI_SKY + '<header><div class="wrap"><a class="site-logo" href="index.html">秋秋很开心</a><nav><a href="index.html">首页</a><a href="topics.html">主题</a><a href="map.html">内容地图</a><a href="timeline.html">时间线</a><a href="opportunity.html">选题机会</a><a href="potential.html">改写潜力</a><a href="archive.html">全部文章</a><a href="search.html">搜索</a><a class="nav-hl" href="about.html">我是谁</a></nav></div></header>';
 const FOOTER = GHIBLI_FOOTER;
 const page = (title, htitle, desc, body) => '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>'+title+' · 秋秋很开心</title><style>'+CSS+'</style></head><body>'+HEADER+'<main class="wrap"><div class="hero"><h1>'+htitle+'</h1><p class="tagline">'+desc+'</p></div>'+body+'</main>'+FOOTER+'</body></html>';
 const maxN = Math.max(...topicStats.map(t => t.count));
@@ -160,3 +160,25 @@ const potHtml = '<p class="hint" style="text-align:center">基于标题/类型/�
 fs.writeFileSync(path.join(OUT,'potential.html'), page('多平台改写潜力','内容生产','把已有文章改写到 小红书 / 视频 / 公众号', potHtml));
 console.log('map done: '+topicStats.map(t=>t.name+":"+t.count).join(' '));
 console.log('pairs:',pairs.length,' opps:',opps.length, opps.map(o=>o.level).join(','));
+// ---- 时间线：按年统计文章量与当年代表（9 年内容演化） ----
+const topCt = list => {
+  const m = {};
+  let mx = '', n = 0;
+  for (const a of list) { const c = a.ct || '-'; m[c] = (m[c] || 0) + 1; if (m[c] > n) { n = m[c]; mx = c; } }
+  return mx;
+};
+const byYear = new Map();
+for (const a of clean) {
+  const y = a.date.slice(0, 4);
+  if (!byYear.has(y)) byYear.set(y, []);
+  byYear.get(y).push(a);
+}
+const years = [...byYear.keys()].sort();
+const maxY = Math.max(...years.map(y => byYear.get(y).length));
+const tlCards = years.map(y => {
+  const list = byYear.get(y).sort((a,b)=>b.date-a.date);
+  const reps = list.slice(0, 3).map(a => '<div class="tl">· '+esc(a.title)+'（'+esc(a.ct||'-')+'）</div>').join('');
+  return '<div class="tp"><h3>'+y+' · '+list.length+' 篇</h3>'+bar(list.length, maxY)+'<div class="why">'+list.length+'篇 · 类型最多：'+esc(topCt(list))+'</div>'+'<details><summary>代表文章</summary>'+reps+'</details></div>';
+}).join('');
+const tlHtml = page('时间线','时间线','九年内容演化的轨迹', '<h2 class="yhead">按年的内容量</h2><div class="map-grid">'+tlCards+'</div>');
+fs.writeFileSync(path.join(OUT,'timeline.html'), tlHtml);
