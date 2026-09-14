@@ -1,0 +1,225 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>会无限回购，提高效率的好用本子来啦！ · 秋秋很开心</title><meta name="description" content=""><meta property="og:title" content="会无限回购，提高效率的好用本子来啦！ · 秋秋很开心"><meta property="og:description" content=""><meta property="og:type" content="website"><meta property="og:site_name" content="秋秋很开心"><link rel="icon" href="../favicon.svg" type="image/svg+xml"><meta property="og:image" content="https://qqhkx2027.github.io/qiuqiu-content-engine/og-card.svg"><meta name="twitter:card" content="summary"><meta http-equiv="refresh" content="0;url=https://mp.weixin.qq.com/s/Rfnugp22ysYqD8c9PjkRZw"><style>/* 吉卜力水彩主题 — 全站共享 */
+:root{
+  --sky:#e9f2ec; --cream:#fdf9f0; --paper:#fffdf6;
+  --green:#5b7f63; --green-deep:#4c6f52; --blue:#6f9bb5;
+  --yellow:#f2d98a; --terracotta:#cf855f; --brown:#8a6f52; --ink:#3b3a34; --line:#e4dbc4;
+  --shadow:0 8px 24px rgba(80,90,60,.12);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;color:var(--ink);
+  line-height:1.75;background:linear-gradient(180deg,#e9f2ec 0%,#f6f8e8 45%,#fdf9f0 75%);min-height:100vh;}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px;position:relative;z-index:2}
+
+/* 天空与山丘装饰 */
+.sky{position:relative;height:96px;overflow:hidden;pointer-events:none;background:linear-gradient(180deg,#dff0f7 0%,#eef7ea 100%);}
+.cloud{position:absolute;background:#fff;border-radius:999px;filter:blur(1px)}
+.cloud:before,.cloud:after{content:'';position:absolute;background:#fff;border-radius:50%}
+.cloud.c1{width:120px;height:34px;left:7%;top:22px;animation:drift 30s linear infinite}
+.cloud.c1:before{width:46px;height:46px;left:20px;top:-24px}
+.cloud.c1:after{width:38px;height:38px;right:18px;top:-16px}
+.cloud.c2{width:78px;height:26px;right:14%;top:38px;animation:drift 40s linear infinite reverse;opacity:.75}
+.cloud.c2:before{width:32px;height:32px;left:14px;top:-18px}
+.cloud.c2:after{width:26px;height:26px;right:12px;top:-12px}
+.sun{position:absolute;right:12%;top:10px;width:46px;height:46px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#fff6c9,#f6cf6b);box-shadow:0 0 28px rgba(246,207,107,.6)}
+.hill{position:relative;height:46px;background:
+  radial-gradient(60% 120% at 12% 100%,#9cbf93 0 68%,transparent 69%),
+  radial-gradient(45% 115% at 40% 100%,#b3cf9f 0 66%,transparent 67%),
+  radial-gradient(55% 130% at 70% 100%,#8fba8b 0 65%,transparent 66%),
+  radial-gradient(40% 90% at 92% 100%,#a8c99b 0 62%,transparent 63%)}
+@keyframes drift{from{transform:translateX(-30px)}to{transform:translateX(90px)}}
+
+header{position:sticky;top:0;z-index:20;background:rgba(255,253,246,.88);backdrop-filter:blur(10px);border-bottom:1.5px solid var(--line)}
+header .wrap{display:flex;justify-content:space-between;align-items:center;padding:10px 24px}
+.site-logo{font-weight:800;color:var(--green-deep);font-size:17px;letter-spacing:.5px}
+nav a{margin-left:16px;color:var(--ink);font-size:14px;font-weight:500}
+nav a:hover{color:var(--green-deep)}
+nav a.nav-hl{color:var(--terracotta);font-weight:800;border-bottom:2px solid var(--terracotta);padding-bottom:2px}
+
+.hero{padding:42px 0 28px;text-align:center}
+.hero h1{font-size:40px;margin:0 0 10px;color:var(--green-deep);letter-spacing:1px}
+.tagline{color:var(--ink);font-size:16px;opacity:.85}
+.stats{margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.stats span{background:var(--paper);border:1.5px solid var(--line);border-radius:999px;padding:6px 16px;font-size:14px;color:var(--green-deep);font-weight:600}
+.hero-actions{display:flex;gap:14px;justify-content:center;margin-top:26px;flex-wrap:wrap}
+.btn{background:var(--green-deep);color:#fff;border-radius:999px;padding:11px 26px;font-size:15px;font-weight:700;display:inline-block;box-shadow:0 5px 14px rgba(76,111,82,.35);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(76,111,82,.45)}
+.btn.outline{background:transparent;border:2px solid var(--green-deep);color:var(--green-deep);box-shadow:none}
+.btn.outline:hover{background:rgba(91,127,99,.08)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px;padding:10px 0 64px}
+.card{background:var(--paper);border:1.5px solid var(--line);border-radius:20px 12px 20px 12px;padding:20px 22px;display:block;position:relative;overflow:hidden;transition:.18s;box-shadow:0 4px 12px rgba(90,100,70,.08)}
+.card:before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--terracotta),var(--yellow),var(--green),#6f8ba5);opacity:.8}
+.card:hover{transform:translateY(-5px) rotate(-.4deg);box-shadow:0 14px 32px rgba(90,100,70,.16)}
+.card-meta{display:flex;justify-content:space-between;font-size:12.5px;color:var(--brown,#8b7f6b);margin-bottom:9px}
+.card h3{font-size:16.5px;margin:0 0 8px;line-height:1.5}
+.card p{font-size:13.5px;color:#6f6758;margin:0 0 12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card .tags span{background:#f3efe2;border-radius:8px;padding:2px 9px;font-size:11.5px;color:var(--brown);margin-right:6px;font-weight:600}
+.year-head{font-size:21px;color:var(--green-deep);margin:38px 0 18px;font-weight:800}
+.year-head:before{content:'☘';color:var(--terracotta);margin-right:8px}
+h2.yhead{font-size:20px;color:var(--green-deep);margin:34px 0 14px;border-bottom:2px solid var(--line);padding-bottom:8px}
+
+.post-title{font-size:30px;color:var(--green-deep);margin:18px 0 4px;line-height:1.4}
+.post-meta{color:#8b7f6b;font-size:14px;margin:6px 0 12px}
+.post-desc{color:#6f6758;font-size:15px;background:rgba(255,253,246,.7);border-left:4px solid var(--yellow);padding:8px 14px;border-radius:0 12px 12px 0}
+.post-body{background:var(--paper);border:1.5px solid var(--line);border-radius:20px;padding:28px;margin:20px 0;box-shadow:var(--shadow)}
+.post-body p{margin:0 0 16px;font-size:15.5px;line-height:1.9}
+.post-body img{max-width:100%;border-radius:14px;margin:10px 0;box-shadow:0 6px 18px rgba(90,100,70,.15)}
+.post-body blockquote{border-left:4px solid var(--terracotta);margin:0 0 16px;padding:14px 18px;color:#6f6758;background:#fbf5ea;border-radius:0 12px 12px 0}
+.post-body h3,.post-body h4{color:var(--green-deep);margin:22px 0 10px}
+.back{color:var(--green-deep);font-size:14px}
+.post-nav{display:flex;justify-content:space-between;gap:16px;margin:26px 0}
+.post-nav a{color:var(--green-deep);font-weight:600}
+.post-footer{margin:22px 0 60px}
+.post-footer a{background:var(--terracotta);color:#fff;border-radius:999px;padding:11px 30px;font-weight:700;display:inline-block}
+
+.dash,.topic{background:var(--paper);border:1.5px solid var(--line);border-radius:18px 12px}
+.bar{background:#efe7d6;border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--terracotta),var(--yellow))}
+.gap{border-radius:12px;padding:8px 12px;font-size:13px;margin:10px 0 0}
+.gap.warn{background:#fdf3e0;border:1px solid #eed9a8;color:#8a6f3b}
+.gap.ok{background:#eff5e9;border:1px solid #d2e3c5;color:#5d7a4f}
+.hint{background:#fbf6ea;border:1px solid #efe0ba;border-radius:14px;padding:12px 18px;font-size:13px;color:#7a733b;margin-top:12px}
+
+.searchbar{display:flex;justify-content:center;gap:10px;margin:28px 0 6px}
+.searchbar input{width:min(480px,100%);padding:12px 22px;border:1.5px solid #ddd0a8;border-radius:999px;font-size:15px;background:#fffdf9;outline:none}
+.searchbar input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(91,127,99,.16)}
+.searchbar button{background:var(--green-deep);color:#fff;border:none;border-radius:999px;padding:0 26px;font-size:15px;font-weight:700;cursor:pointer}
+footer{text-align:center;color:var(--brown);font-size:13px;padding:34px 0 44px;background:linear-gradient(180deg,transparent,#e6f0dc)}
+footer .foot-nav{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+footer .foot-nav a{color:var(--green-deep);font-weight:600;font-size:13.5px;border-bottom:1px dashed transparent;padding-bottom:2px}
+footer .foot-nav a:hover{border-bottom-color:var(--green-deep)}
+footer .foot-line{opacity:.9}
+@media(max-width:640px){.hero h1{font-size:28px}.grid{grid-template-columns:1fr}nav a{margin-left:10px;font-size:13px}}
+</style></head><body><div class="sky"><span class="cloud c1"></span><span class="cloud c2"></span><span class="sun"></span></div><div class="hill"></div><header><div class="wrap"><a class="site-logo" href="../index.html">秋秋很开心</a><nav><a href="../about.html" class="nav-hl">我是谁</a><a href="../index.html">首页</a><a href="../topics.html">主题</a><a href="../map.html">内容地图</a><a href="../archive.html">全部文章</a><a href="../search.html">搜索</a></nav></div></header><main class="wrap"><article class="post"><div class="jump-banner"><p>本文正在跳转到公众号原文…</p><a class="btn" href="https://mp.weixin.qq.com/s/Rfnugp22ysYqD8c9PjkRZw" target="_blank" rel="noopener">如果未自动跳转，请点击这里</a></div><a class="back" href="../index.html">← 返回首页</a><h1 class="post-title">会无限回购，提高效率的好用本子来啦！</h1><div class="post-meta"><time>2026-09-01</time> · 秋秋很开心 · 1408 字 · 约4 分钟阅读</div><p class="post-desc"></p><div class="post-body"><p>##</p>
+<p>会无限回购，提高效率的好用本子来啦！</p>
+<p>##</p>
+<p>原创</p>
+<p>秋秋</p>
+<p>秋秋</p>
+<p>秋秋很开心</p>
+<p>在小说阅读器读本章</p>
+<p>去阅读</p>
+<p>在公众号小说中沉浸阅读</p>
+<img loading="lazy" src="https://mmbiz.qpic.cn/mmbiz_gif/0LE3GtDxbQughHrQdA0R0AIAoGZiaCHQzrsd9ee9TruOsfEduBTap1Y0ueNDASvrFUGGA3eYTvpwZNE271OMesyvicXJTIVd1dbnfib2ibmSLXA/640?wx_fmt=gif&from=appmsg" alt="">
+<p>大家好，我是秋秋呀。</p>
+<p>很多人买本子，很容易一不小心买一堆，最后真正写完的只有两三本。</p>
+<p>这次就把我用过好几年的好用本子分成三类：基础款、口袋本、手帐规划本。</p>
+<p>每本都写了优点适合谁，文末有视频，看完再买不容易闲置～</p>
+<h3>1</h3>
+<p>##</p>
+<h3>基础款｜上课、刷题、做主力笔记</h3>
+<p>##</p>
+<h3>1、国誉美乐蒂限定 B5</h3>
+<h3>![](https://mmbiz.qpic.cn/sz_mmbiz_jpg/0LE3GtDxbQurKHOpEn80fUNIv61qZOZq8iaib5Yng6PMQz8yzL8dlD3cIAjvRKtj4EnlkXUhG4uBOiczyPWCPt1JTsExlGfRVQhyIwzkwiavBibU/640?wx_fmt=jpeg&amp;from=appmsg)</h3>
+<p>第一本就是颜值天花板！国誉和美乐蒂的联名真的很温柔，纸张顺滑，写字不刮纸，也不容易洇墨。</p>
+<img loading="lazy" src="https://mmbiz.qpic.cn/mmbiz_jpg/0LE3GtDxbQs9sOMuhSdHDcSFndcwAn5wWnna64L1qTdicWYKZXuBOTzHQNR5yFcEmMrNKk9fm707WRrHMHJBxSCOavNNqb8VfSvIlcPBK0lw/640?wx_fmt=jpeg&from=appmsg" alt="">
+<p>它能 180 度平铺，跨页记笔记很舒服；活页设计还能按科目自由加减内页，拿来做主力课堂笔记很合适。</p>
+<p>注意： 限定款会比普通款贵一点；纸面偏滑，控笔不稳的宝子可能会觉得打滑。</p>
+<p>适合： 想要颜值、喜欢把课后笔记整理得很整齐的人。</p>
+<h3>2、无印良品笔记本</h3>
+<h3>![](https://mmbiz.qpic.cn/mmbiz_jpg/0LE3GtDxbQv6ozp0W0ibSicMaZh8oHSBPg8L6954DkPjlKaEM5hQRHOs55dAWYfdIl46aIl5uj08GyTOwWQpibu6FOibCH70ZMRp2MV7cQfcaRw/640?wx_fmt=jpeg&amp;from=appmsg)它就是极简党的本命本，封面干干净净，没有花里胡哨的设计，摆在桌上看着就很治愈。![](https://mmbiz.qpic.cn/sz_mmbiz_jpg/0LE3GtDxbQt6xHDkhls16fNiaOL0EPotCC4ZCQCJdYINWMn7jDOwbGjkRWAW3O6TxsXRTWiaW9SNMKPkbTQLkN56YxZIlPK07KF3Podia4mf34/640?wx_fmt=jpeg&amp;from=appmsg)</h3>
+<p>纸张厚实，写起来很稳。</p>
+<p>注意： 性价比一般，纯追求实用的话有更便宜的选择。</p>
+<p>适合： 摘抄、随笔、喜欢极简风的人。</p>
+<h3>3、国誉拍纸本</h3>
+<h3>![](https://mmbiz.qpic.cn/mmbiz_jpg/0LE3GtDxbQtXmVfmSXsGDfVJJLUHqneOykumjebfnibDP7uOicMticUms2rSRj0r66P1zib7XAcZdDgjyhqaicicpCzFkRyZM28MFIdcmjibmY1wicg/640?wx_fmt=jpeg&amp;from=appmsg)</h3>
+<p>作为学生党草稿本，我一定会在手边留一本。便宜大碗，随便写、随便造，写完撕下来也方便。</p>
+<img loading="lazy" src="https://mmbiz.qpic.cn/mmbiz_jpg/0LE3GtDxbQvs0Y7AHVmg0qq08Z8eSsBgPaXEibxPiaSGfMicmy0vXJrm0lFjVp6HZ8A2scJwibaXmx4IllGic8drh7QV2WMhBh61nfnG5d3pfTb8/640?wx_fmt=jpeg&from=appmsg" alt="">
+<p>刷题、演算、临时整理错题都够用。</p>
+<p>注意： 纸偏薄，没有封面也容易脏，不适合长期保存。</p>
+<p>适合： 草稿、临时错题、随手涂鸦。</p>
+<h3>4、国誉基础款 A5</h3>
+<h3>![](https://mmbiz.qpic.cn/sz_mmbiz_jpg/0LE3GtDxbQu7eBzlBicvHSP7M5gukwp3gYQInPibkpuExYJS2xb5sib5wet265u425WfDWjLkLQdDFicN1LiaP5bbrYxWhwdVZlVkWrflukaCsf8/640?wx_fmt=jpeg&amp;from=appmsg)</h3>
+<p>这是我使用率最高的一本，A5 小小的，塞书包、随手带出门都方便。</p>
+<img loading="lazy" src="https://mmbiz.qpic.cn/mmbiz_jpg/0LE3GtDxbQtWhOCJ6p4e5tHN5zM5uxDV92a0thpsW5OrofACu1qTxA7nr5GNf1p9icqCyD8RF6Vxx6POPCo9pKW8Tt6iaDSUevKnl6LcfwTH0/640?wx_fmt=jpeg&from=appmsg" alt="">
+<p>纸质也很稳，日常用什么笔都不太挑。</p>
+<p>注意： 版面偏小，不适合写长篇大段笔记或画大图。</p>
+<p>适合： 随堂速记、碎片知识点、日常精简记录。</p>
+<h3>2</h3>
+<p>##</p>
+<h3>口袋小本｜重点、错题和随手记录</h3>
+<p>##</p>
+<h3>5、满乐文手掌本</h3>
+<h3>![](https://mmbiz.qpic.cn/sz_mmbiz_jpg/0LE3GtDxbQuO2yiaRQkej4g816xvRIOicnRm5hTaVpU1bZBzibHM3OQq4SLoia4cDfBxRYeCskbwEeeU2ibhYoc9j4VibLdyIDdJaBfPEP6QkwEUY/640?wx_fmt=jpeg&amp;from=appmsg)</h3>
+<p>巴掌大小，真的可以直接放口袋。</p>
+<img loading="lazy" src="https://mmbiz.qpic.cn/mmbiz_jpg/0LE3GtDxbQthDgnH7F9TYNZ8hSWYUX8voew3vEnO9txCexKKmYiagqQDDCdrINIiaicBv2jziaR3a29kLs9fORDIpyZ5TamibddVJovCnWvo58Vs/640?wx_fmt=jpeg&from=appmsg" alt="">
+<p>注意： 版面太小，页数也不多，别指望它承担长篇内容。</p>
+<p>适合： 随身记重点、做错题本、通勤时的碎片记录。</p>
+<h3>6、无印良品口袋本</h3>
+<h3>![](https://mmbiz.qpic.cn/sz_mmbiz_jpg/0LE3GtDxbQuibFDemerXyedvocun8YjvssOnR798Jkic5L9X0OFvl3a0b2qHaicnTCJsINj4eNhFYksgib6FPxASSrDOiakwN2RxCDiajry2sOI1I/640?wx_fmt=jpeg&amp;from=appmsg)</h3>
+<p>这本也是极简随身本，翻页手感很好，干干净净的质感很舒服。</p>
+<img loading="lazy" src="https://mmbiz.qpic.cn/mmbiz_jpg/0LE3GtDxbQv3g0hx5KN0NgdBySP8tP7RQpZu71zz6jNDtT7p2VMWib9gPdbu9g15kYdj4BX8FKkqKujiboMRMEaXXh5ib1UvqyJeWib4addszXQ/640?wx_fmt=jpeg&from=appmsg" alt="">
+<p>注意： 小贵，纯用来学习的话性价比不算高。</p>
+<p>适合： 每日清单、待办、小事记录、极简手帐。</p>
+<h3>3</h3>
+<p>##</p>
+<h3>手帐规划本｜开学做计划、记录生活</h3>
+<p>##</p>
+<h3>7、Hobo 手帐本</h3>
+<h3>![](https://mmbiz.qpic.cn/sz_mmbiz_jpg/0LE3GtDxbQv5LiamwbAtiaDrkw1T5OInic48B7MzqAfcDkSlFPJSCGJNE8tuicaLdStPljJ66Optj3HfNOOH5pUUj0Dh5WwKYHl3yDs0zUsmonM/640?wx_fmt=jpeg&amp;from=appmsg)</h3>
+<p>这是我自用频率最高的一本手帐。</p>
+<img loading="lazy" src="https://mmbiz.qpic.cn/sz_mmbiz_jpg/0LE3GtDxbQsV1fu0voDJIpwF7YL37Z4TRepibMtPVu6W9xMMBuagTFlqq3YMKbqH1QgaDNGP66lTPR8DkwkYGfrZwrusiaJL1BsPjtwAWBae8/640?wx_fmt=jpeg&from=appmsg" alt="">
+<p>注意： 价格偏高，内页需要另外购买或更换；如果只用来记学习任务，会有点浪费。</p>
+<p>适合： 日常手帐、拼贴、日记、生活记录。</p>
+<h3>8、国誉自我手帐</h3>
+<h3>![](https://mmbiz.qpic.cn/mmbiz_jpg/0LE3GtDxbQtTsohibOcPjicYVsmuNBZRRdsdUqWukZBYETpoMzic421mJRnY1s6tN9W2Ubxd8WWMvvdicSWH65lT8eersJjArm3IQT6NmfQ5m00/640?wx_fmt=jpeg&amp;from=appmsg)</h3>
+<p>自律学生党可以试试它。</p>
+<img loading="lazy" src="https://mmbiz.qpic.cn/mmbiz_jpg/0LE3GtDxbQuiaXBA6JcfQteiaUjswcAibLIzKnUyxsPhpicuMlNRkNvAO48NJwrlibiaKlNybngS3Pr9YBAKlPThcOCagjvYqqNvcyl1JAWRhDBF4/640?wx_fmt=jpeg&from=appmsg" alt="">
+<p>注意： 版式固定，不喜欢被框住的人可能会用不惯。</p>
+<p>适合： 学习规划、备考、自律打卡、时间管理。</p>
+<h3>最后：笔袋里放两本便利贴</h3>
+<h3>![](https://mmbiz.qpic.cn/sz_mmbiz_jpg/0LE3GtDxbQtFqKytGowqIicwACJL9ftP3Ox2TN70eFgdibfD5jv8gQ0IKGGySDtRlwLRUR3RIYvK12wpTzlmDceEZIw7uhcLhsrC75AA35SNI/640?wx_fmt=jpeg&amp;from=appmsg)</h3>
+<p>有些临时任务和突然想到的重点，不值得特意翻开本子。</p>
+<p>便利贴随手写、随手贴，反而最不容易漏记。</p>
+<h3>4</h3>
+<p>##</p>
+<h3>小结｜按用途买，不容易闲置</h3>
+<p>##</p>
+<p>如果你现在只想买一本到手：</p>
+<p>上课记笔记： 国誉 B5 / A5刷题、演算： 国誉拍纸本随身记重点、错题： 满乐文手掌本 / 无印良品口袋本做规划、写手帐： 国誉自我手帐 / Hobo</p>
+<p>本子不用买太多，先选一本最符合你现在需求的，用完它，比囤十本更有成就感。</p>
+<p>你们开学最常用哪种本子？</p>
+<p>视频版⬇️⬇️⬇️</p>
+<p>预览时标签不可点</p>
+<p>微信扫一扫</p>
+<p>关注该公众号</p>
+<p>知道了</p>
+<p>微信扫一扫</p>
+<p>使用小程序</p>
+<p>取消</p>
+<p>允许</p>
+<p>取消</p>
+<p>允许</p>
+<p>取消</p>
+<p>允许</p>
+<p>×</p>
+<p>分析</p>
+<img loading="lazy" src="http://mmbiz.qpic.cn/mmbiz_png/PibuibB1Eez6BrfichIYkZFFKxWB9ZNsaG0bUPm7nhluPWic1PZ195pqn0Eoeict74kEQTImU1zPBvj1iaHPICMfvS8g/0?wx_fmt=png" alt="">
+<p>微信扫一扫可打开此内容，</p>
+<p>使用完整服务</p>
+<p>：</p>
+<p>，</p>
+<p>，</p>
+<p>，</p>
+<p>，</p>
+<p>，</p>
+<p>，</p>
+<p>，</p>
+<p>，</p>
+<p>，</p>
+<p>，</p>
+<p>，</p>
+<p>，</p>
+<p>。</p>
+<p>视频</p>
+<p>小程序</p>
+<p>赞</p>
+<p>，轻点两下取消赞</p>
+<p>在看</p>
+<p>，轻点两下取消在看</p>
+<p>分享</p>
+<p>留言</p>
+<p>收藏</p>
+<p>听过</p></div><nav class="post-nav"><div class="post-nav-item"><a href="20260901-s91n.html">← 发现云南宝藏小城·元谋｜房价3000平，冬天20-26°，物价低！</a></div><div class="post-nav-item right"><a href="20260830-muca.html">豆包工作、千问办公、WorkBuddy：谁真的能替你干活？ →</a></div></nav><div class="post-footer"><a href="https://mp.weixin.qq.com/s/Rfnugp22ysYqD8c9PjkRZw" target="_blank" rel="noopener">在公众号阅读原文</a></div></article></main><footer><div class="foot-nav"><a href="about.html">认识秋秋</a><a href="map.html">内容地图</a><a href="archive.html">全部文章</a><a href="opportunity.html">我会继续写什么</a><a href="rss.xml">RSS 订阅</a></div><div class="foot-line">© 2026 秋秋很开心 · 秋秋在分享 · 全部内容为秋秋原创，卡片可跳转公众号原文</div></footer></body></html>
