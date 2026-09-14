@@ -37,12 +37,19 @@ jobs:
       - name: Fetch new wechat articles (weread direct cookie)
         env:
           WEREAD_COOKIE: ${{ secrets.WEREAD_COOKIE }}
-          DEBUG_BOOKS: '1'
         run: |
           if [ -n "$WEREAD_COOKIE" ]; then
             node site/fetch_weread_direct.mjs || echo '(拉取失败，继续构建)'
           else
             echo '(未配置 WEREAD_COOKIE，跳过拉取)'
+          fi
+
+      - name: Probe weread APIs
+        env:
+          WEREAD_COOKIE: ${{ secrets.WEREAD_COOKIE }}
+        run: |
+          if [ -n "$WEREAD_COOKIE" ]; then
+            node site/probe_weread.mjs || echo '(probe 失败)'
           fi
 
       - name: Extract article meta
