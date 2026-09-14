@@ -5,6 +5,14 @@ import { INTEL_EXTRA } from './theme_extra.mjs';
 const OUT = path.join(import.meta.dirname, '..', 'docs');
 const DATA = path.join(import.meta.dirname, '..', 'content/公众号/outputs/articles_data.json');
 const TAXONOMY = path.join(import.meta.dirname, '..', 'config/taxonomy.json');
+// archive 权威链接映射：title → 公众号原文 URL（真实存在的文章；archive 卡链接直接 mp.weixin.qq.com）
+const ARCHIVE_LINK = {};
+try {
+  const ah = fs.readFileSync(path.join(OUT, 'archive.html'), 'utf8');
+  for (const m of ah.matchAll(/<a class="card" href="(https:\/\/mp\.weixin\.qq\.com\/[^"]+)"[^>]*>.*?<h3>([^<]+)<\/h3>/g)) {
+      ARCHIVE_LINK[m[2].trim()] = m[1];
+    }
+} catch (e) { /* archive 缺失时不显示素材链接 */ }
 const raw = JSON.parse(fs.readFileSync(DATA, 'utf8'));
 const tax = JSON.parse(fs.readFileSync(TAXONOMY, 'utf8'));
 const clean = raw
@@ -17,6 +25,7 @@ const clean = raw
     wc: Number(a.word_count) || 0,
     pillars: Array.isArray(a.pillars) ? a.pillars : [],
     preview: (a.content_preview || '').slice(0, 180),
+    src: a.filename || a.source || a.title,
   }))
   .sort((a, b) => (a.date < b.date ? 1 : -1));
 const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -129,7 +138,15 @@ const mapCards = topicStats.map(t => '<div class="tp"><h3>'+esc(t.name)+'</h3><d
 const maxCross = pairs.length ? Math.max(...pairs.map(p=>p.count)) : 1;
 const mapBody = '<h2 class="yhead">主题总览</h2><div class="dash">'+dashCards+'</div><h2 class="yhead">主题全景与代表内容</h2><div class="map-grid">'+mapCards+'</div><h2 class="yhead">主题交叉（已有内容）</h2><div class="map-grid">'+pairs.slice(0,6).map(p=>'<div class="tp"><h3>'+esc(p.t1+' × '+p.t2)+'</h3><div class="cnt">'+p.count+' 篇 · 最近 '+esc(p.latest)+'</div>'+bar(p.count,maxCross)+'</div>').join('')+'</div>';
 const mapHtml = page('内容地图','内容地图','502 篇文章的分布与交叉', mapBody);
-const oppBody = '<div class="legend"><span><i style="background:#4f8f5f"></i>建议深耕</span><span><i style="background:#5b8db8"></i>交叉机会</span><span><i style="background:#c2852f"></i>新兴上升</span><span><i style="background:#c25e4a"></i>沉寂主题</span><span><i style="background:#9b7ec9"></i>类型缺口</span><span><i style="background:#c76f9e"></i>时间重写</span></div><ol class="opp">'+opps.map((o,i)=>'<li class="'+o.level+'"><span class="badge">'+(i+1)+' · '+esc(o.name)+'</span><h4>'+esc(o.title)+'</h4><p>'+esc(o.reason)+'</p></li>').join('')+'</ol><div class="hint">规则：按全部文章的标签出现频率、近两年活跃度、标签交叉空白、内容类型分布自动计算。每次更新文章后运行 build_intel.mjs 即可刷新。</div>';
+const relHtml = o => {
+  // 从机会名提取可匹配的 tag（成果 title/pillar/tag 匹配）
+  const t = o.name.replace(/[′时间重写类型缺口×「」]/g, '').trim();
+  const hit = clean.find(a => a.title.includes(t) || (a.pillars||[]).includes(t) || (a.tags||[]).includes(t));
+  // 用 archive.html 的权威链接（避免自己猜 hash 产生死链）
+  const url = hit && ARCHIVE_LINK[hit.title];
+  return url ? '<a class="rel" href="'+url+'">→ 相关素材：'+esc(hit.title)+'</a>' : '';
+};
+const oppBody = '<div class="legend"><span><i style="background:#4f8f5f"></i>建议深耕</span><span><i style="background:#5b8db8"></i>交叉机会</span><span><i style="background:#c2852f"></i>新兴上升</span><span><i style="background:#c25e4a"></i>沉寂主题</span><span><i style="background:#9b7ec9"></i>类型缺口</span><span><i style="background:#c76f9e"></i>时间重写</span></div><ol class="opp">'+opps.map((o,i)=>'<li class="'+o.level+'"><span class="badge">'+(i+1)+' · '+esc(o.name)+'</span><h4>'+esc(o.title)+'</h4><p>'+esc(o.reason)+'</p>'+relHtml(o)+'</li>').join('')+'</ol><div class="hint">小提示：灰色「相关素材」= 该机会在 archive 里找到的权威文章链接（非死链）。每次更新文章后运行 build_intel.mjs 即可刷新。</div>';
 const oppHtml = page('选题机会','选题机会','从 502 篇历史里找「值得写但还没写」的切入点', oppBody);
 fs.writeFileSync(path.join(OUT,'map.html'), mapHtml);
 fs.writeFileSync(path.join(OUT,'opportunity.html'), oppHtml);
