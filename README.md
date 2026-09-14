@@ -27,7 +27,7 @@ qiuqiu-content-engine/
 │   ├── site.json               # 站点风格配置
 │   └── url_migrations.json
 ├── content_engine.py           # 本地语义检索（Chroma）index / search / suggest
-├── doc/                        # 架构文档（内容模型）
+├── doc/                        # 架构文档：content-model.md（内容模型）· workflows.md（操作手册）
 ├── tests/                      # 轻量回归测试（python3 tests/test_extract.py）
 ├── docs/                       # 构建产物（GitHub Pages 根，勿手工改）
 └── .github/workflows/          # CI：自动构建 + 发布
