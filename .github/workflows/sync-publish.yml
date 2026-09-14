@@ -34,14 +34,14 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Fetch new wechat articles (wewe-rss)
+      - name: Fetch new wechat articles (weread direct cookie)
         env:
-          WEWE_RSS_ORIGIN: ${{ secrets.WEWE_RSS_ORIGIN }}
+          WEREAD_COOKIE: ${{ secrets.WEREAD_COOKIE }}
         run: |
-          if [ -n "$WEWE_RSS_ORIGIN" ]; then
-            node site/fetch_wechat.mjs || echo '(拉取失败，继续构建)'
+          if [ -n "$WEREAD_COOKIE" ]; then
+            node site/fetch_weread_direct.mjs || echo '(拉取失败，继续构建)'
           else
-            echo '(未配置 WEWE_RSS_ORIGIN，跳过拉取)'
+            echo '(未配置 WEREAD_COOKIE，跳过拉取)'
           fi
 
       - name: Extract article meta
