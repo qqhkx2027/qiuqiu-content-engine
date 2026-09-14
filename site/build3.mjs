@@ -20,6 +20,8 @@ const clean = articles
     tags: Array.isArray(a.tags) ? a.tags.map(t => t.trim()).filter(Boolean) : [],
     source: a.source || '',
     word_count: Number(a.word_count) || 0,
+    pillars: Array.isArray(a.pillars) ? a.pillars : [],
+    content_type: Array.isArray(a.content_type) ? a.content_type[0] || '' : (a.content_type || ''),
     content_full: a.content_full || a.content_preview || '',
   }))
   .sort((a, b) => (a.date < b.date ? 1 : -1));
@@ -57,7 +59,11 @@ const CSS = GHIBLI_CSS;
 const headerBar = (base = '') => `${GHIBLI_SKY}<header><div class="wrap"><a class="site-logo" href="${base}index.html">${SITE_NAME}</a><nav><a href="${base}about.html" class="nav-hl">我是谁</a><a href="${base}index.html">首页</a><a href="${base}topics.html">主题</a><a href="${base}map.html">内容地图</a><a href="${base}archive.html">全部文章</a><a href="${base}search.html">搜索</a></nav></div></header>`;
 const footer = () => '<footer><div class="foot-nav"><a href="about.html">认识秋秋</a><a href="map.html">内容地图</a><a href="archive.html">全部文章</a><a href="opportunity.html">我会继续写什么</a><a href="rss.xml">RSS 订阅</a></div><div class="foot-line">© 2026 秋秋很开心 · 秋秋在分享 · 全部内容为秋秋原创，卡片可跳转公众号原文</div></footer>';
 const page = (title, content, desc = '秋秋的个人网站，' + clean.length + ' 篇公众号历史文章存档', base = '', redirect = '') => `<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${title}</title><meta name="description" content="${desc}"><meta property="og:title" content="${title}"><meta property="og:description" content="${desc}"><meta property="og:type" content="website"><meta property="og:site_name" content="秋秋很开心"><meta property="og:image" content="https://qqhkx2027.github.io/qiuqiu-content-engine/og-card.svg"><meta name="twitter:card" content="summary">${redirect ? '<meta http-equiv="refresh" content="0;url=' + redirect + '">' : ''}<style>${CSS}</style></head><body>${headerBar(base)}<main class="wrap">${content}</main>${footer()}</body></html>`;
-const hero = () => `<div class="hero"><h1>把人生写成一场公开实验</h1><p class="tagline">秋秋的个人网站 · ${clean.length} 篇公众号文章的完整存档</p><div class="stats"><span>${clean.length} 篇文章</span><span>${years.length} 年</span><span>全部原创</span></div><div class="hero-actions"><a class="btn" href="archive.html">阅读全部文章</a><a class="btn outline" href="about.html">认识秋秋</a></div></div>`;
+const hero = () => {
+  const pillarSet = new Set(clean.flatMap(a => a.pillars || []));
+  const typeSet = new Set(clean.map(a => a.content_type).filter(Boolean));
+  return `<div class="hero"><h1>把人生写成一场公开实验</h1><p class="tagline">秋秋的个人网站 · ${clean.length} 篇公众号文章的完整存档</p><div class="stats"><span>${clean.length} 篇文章</span><span>${years.length} 年</span><span>${pillarSet.size} 大主题</span><span>${typeSet.size} 种内容类型</span></div><div class="hero-actions"><a class="btn" href="archive.html">阅读全部文章</a><a class="btn outline" href="map.html">内容地图</a></div></div>`;
+}
 
 // 行内 markdown 渲染（转义后补回强调/链接）
 const inline = s => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/\[([^\]\n]+)\](https?:\/\/[^)\s]+)/g, '<a class="linkout" href="$2" target="_blank" rel="noopener">$1</a>');
