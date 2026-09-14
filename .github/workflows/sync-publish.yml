@@ -37,6 +37,7 @@ jobs:
       - name: Fetch new wechat articles (weread direct cookie)
         env:
           WEREAD_COOKIE: ${{ secrets.WEREAD_COOKIE }}
+          DEBUG_BOOKS: '1'
         run: |
           if [ -n "$WEREAD_COOKIE" ]; then
             node site/fetch_weread_direct.mjs || echo '(拉取失败，继续构建)'
