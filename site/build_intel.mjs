@@ -4,7 +4,9 @@ import { GHIBLI_CSS, GHIBLI_SKY, GHIBLI_FOOTER } from './theme.mjs';
 import { INTEL_EXTRA } from './theme_extra.mjs';
 const OUT = path.join(import.meta.dirname, '..', 'docs');
 const DATA = path.join(import.meta.dirname, '..', 'content/公众号/outputs/articles_data.json');
+const TAXONOMY = path.join(import.meta.dirname, '..', 'config/taxonomy.json');
 const raw = JSON.parse(fs.readFileSync(DATA, 'utf8'));
+const tax = JSON.parse(fs.readFileSync(TAXONOMY, 'utf8'));
 const clean = raw
   .filter(a => a && a.title && a.date)
   .map(a => ({
@@ -63,14 +65,12 @@ tagStats.filter(t => t.count >= 4 && t.recent >= 5 && t.recent / t.count >= 0.75
 const levelOrder = { go: 0, gap: 1, trend: 2, revive: 3 };
 opps.sort((a,b)=> levelOrder[a.level]-levelOrder[b.level]);
 // ---- 内容地图 ----
-const TOPICS = [
-  { name: '生活方式', why: '普通家庭怎么过得舒服又体面，是我一直在试的事', match: ['生活方式', '旅行', '情感'] },
-  { name: '自我成长', why: '不追求成为更卷的人，只想成为更清醒的人', match: ['自我成长', '方法教程', '经验分享', '个人复盘'] },
-  { name: '读书', why: '读过的书，变成真正改变生活的东西', match: ['读书', '书单推荐'] },
-  { name: 'AI 与工具', why: '折腾工具，但最终还是为了让生活更简单', match: ['AI'] },
-  { name: '好物分享', why: '少买一点，但每一样都真的喜欢', match: ['好物', '好物推荐'] },
-  { name: '财务自由', why: '钱不是终点，是换取选择权的工具', match: ['理财', '搞钱', '存钱', '提前退休', '理财分析'] },
-];
+// TOPICS 单一真相来自 config/taxonomy.json 的 pillars（配置集中，不在脚本里重复）
+const TOPICS = (tax.pillars || []).map(p => ({
+  name: p.name,
+  why: p.why || '',
+  match: p.aliases || [],
+}));
 const assigned = clean.map(a => ({ ...a, topics: TOPICS.filter(t => a.tags.some(tag => t.match.includes(tag) || t.match.some(m => tag.includes(m)))).map(t => t.name) }));
 const topicStats = TOPICS.map(tp => {
   const posts = assigned.filter(a => a.topics.includes(tp.name));
