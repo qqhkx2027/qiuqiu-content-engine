@@ -16,6 +16,17 @@ if (!ih.includes('ob-title')) {
   // 在 hero 结束后插入引导条（两条路）
   const onboard = '<div class="onboard"><div class="ob-title">欢迎 👋 第一次来，有两条路</div><div class="ob-row"><a class="ob-card" href="about.html"><div class="ob-h">认识秋秋</div><div class="ob-d">看看我为什么写这些东西</div></a><a class="ob-card" href="map.html"><div class="ob-h">探索我的内容</div><div class="ob-d">502 + 篇文章，看看这些年我到底写了什么</div></a></div></div>';
   ih = ih.replace('<form class="searchbar"', onboard + '<form class="searchbar"');
+  // 首页「今日值得写」：读 intel.json 展示 Top 3 选题（工作台式体验）
+  try {
+    const intel = JSON.parse(fs.readFileSync(path.join(OUT, 'intel.json'), 'utf8'));
+    const top = intel.opps.slice(0, 3);
+    const doRow = '<div class="ob-title">📌 今日值得写</div>' + top.map(o =>
+      '<a class="ob-card" href="opportunity.html"><div class="ob-h">' + o.name + '</div><div class="ob-d">' + o.title + '</div></a>'
+    ).join('');
+    const doBlock = '<div class="onboard" style="margin-top:0"><div class="welcome">今天值得写什么？</div><div class="ob-row">' + doRow + '</div></div>';
+    ih = ih.replace('<form class="searchbar"', doBlock + '<form class="searchbar"');
+    console.log('home today-picks injected: ' + top.length);
+  } catch (e) { console.log('intel.json missing, skip today picks', e.message); }
   // CSS 追加
   const obCss = '<style>.onboard{background:rgba(255,253,246,.78);border:1.5px dashed var(--line);border-radius:18px;padding:18px 20px;margin:24px auto 10px;max-width:620px}.onboard .welcome{font-size:14px;font-weight:800;color:var(--green-deep);margin-bottom:12px}.onboard .ob-row{display:flex;gap:12px;flex-wrap:wrap}.onboard .ob-card{flex:1;min-width:220px;background:var(--paper);border:1.5px solid var(--line);border-radius:14px;padding:11px 14px;transition:.15s;display:block}.onboard .ob-card:hover{border-color:var(--green);transform:translateY(-2px)}.onboard .ob-h{font-size:14px;font-weight:800;color:var(--ink)}.onboard .ob-d{font-size:12px;color:var(--brown);margin-top:3px;line-height:1.5}</style>';
   ih = ih.replace('</style>', obCss);

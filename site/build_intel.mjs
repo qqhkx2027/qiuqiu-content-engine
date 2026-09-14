@@ -117,5 +117,11 @@ const oppBody = '<div class="legend"><span><i style="background:#4f8f5f"></i>建
 const oppHtml = page('选题机会','选题机会','从 502 篇历史里找「值得写但还没写」的切入点', oppBody);
 fs.writeFileSync(path.join(OUT,'map.html'), mapHtml);
 fs.writeFileSync(path.join(OUT,'opportunity.html'), oppHtml);
+// 结构化选题数据：供其它构建阶段（如首页「今日值得写」）复用
+fs.writeFileSync(path.join(OUT,'intel.json'), JSON.stringify({
+  generatedAt: new Date().toISOString().slice(0,10),
+  topics: topicStats.map(t => ({ name:t.name, count:t.count, recent:t.recent })),
+  opps: opps.map(o => ({ level:o.level, name:o.name, title:o.title, reason:o.reason })),
+}));
 console.log('map done: '+topicStats.map(t=>t.name+":"+t.count).join(' '));
 console.log('pairs:',pairs.length,' opps:',opps.length, opps.map(o=>o.level).join(','));
