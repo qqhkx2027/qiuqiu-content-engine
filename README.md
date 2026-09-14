@@ -24,20 +24,19 @@ qiuqiu-content-engine/
 └── .github/workflows/          # 自动构建 + 发布
 ```
 
-## 抓取链路（三种场景）
+## 抓取链路（两种场景）
 
 | 场景 | 脚本 | 何时用 | 依赖 |
 |---|---|---|---|
-| **微信读书官方直连**（主链，CI 自动） | `site/fetch_weread_direct.mjs` | GitHub Actions 每天 01:00 UTC | 微信读书 Cookie（`WEREAD_COOKIE` secret） |
-| **本地服务器轮询**（备用，cron） | `site/fetch_wemp.mjs` | 服务器上已配好 we-mp-rss 实例，定时增量入库 | 本地 we-mp-rss 服务 |
 | **单篇补抓**（按链接补历史） | `site/fetch_by_url.mjs` | 手动补几篇缺的文章 | 一个或多个 mp.weixin.qq.com 链接 |
+| **本地服务器轮询**（cron 增量） | `site/fetch_wemp.mjs` | 服务器上已配好 we-mp-rss 实例，定时入库（`~/bin/bridge_wechat.sh`） | 本地 we-mp-rss 服务 |
 
-> 详细接入说明见 `site/README-weread-direct.md`（官方直连主链的 Cookie 获取与配置）。
+> 官方微信读书直连（`fetch_weread_direct.mjs` + CI 自动拉取）已移除；发布由手动补充 + `bridge_wechat.sh`（服务器 cron）统一推进，再经 CI 自动构建。
 
 ## 网站构建 / 更新流程
 
-推送 `content/公众号/**` 或 `site/**` 的改动 → GitHub Actions 自动跑：
-`fetch_weread_direct`(拉取) → `extract_articles.py`(抽取元数据) → `build_all.mjs`(转 docs/) → 提交 + 部署 GitHub Pages。全程无需本地操作。
+推送 `content/公众号/**` 或 `site/**` 改动 → GitHub Actions 自动：
+`extract_articles.py`(抽取元数据) → `build_all.mjs`(转 docs/) → 提交 + 部署 GitHub Pages。全程无需本地操作。
 
 **本地手动预览**：
 
