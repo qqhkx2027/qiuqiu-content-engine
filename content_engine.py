@@ -157,19 +157,27 @@ def load_derived_meta():
     return out
 
 
-def search(query: str, limit: int = 8):
-    result = collection().query(query_embeddings=[vector(query)], n_results=limit)
+def search(query: str, limit: int = 8, pillar: str | None = None, ctype: str | None = None):
+    # 拉多召回在内存过滤（避免 chromadb substring where 的限制）
+    pool = max(limit * 4, 20)
+    result = collection().query(query_embeddings=[vector(query)], n_results=pool)
     docs = result.get("metadatas", [[]])[0]
     distances = result.get("distances", [[]])[0]
-    if not docs:
-        print("没有找到匹配文章。请先运行 index。")
+    rows = list(zip(docs, distances))
+    if pillar:
+        rows = [(m, d) for m, d in rows if pillar in (m.get("pillars") or "").split(",")]
+    if ctype:
+        rows = [(m, d) for m, d in rows if m.get("content_type") == ctype]
+    rows = rows[:limit]
+    if not rows:
+        print("没有找到匹配文章。请先运行 index，或放宽过滤条件。")
         return []
-    for i, (meta, distance) in enumerate(zip(docs, distances), 1):
+    for i, (meta, distance) in enumerate(rows, 1):
         print(f"{i}. [{meta['title']}]({obsidian_link(meta['path'])})")
-        print(f"   {meta.get('published','')} · 距离 {distance:.3f}")
+        print(f"   {meta.get('published','')} · 距离 {distance:.3f} · pillars:{meta.get('pillars','')} · 类型:{meta.get('content_type','')}")
         if meta.get("description"):
             print(f"   {meta['description']}")
-    return docs
+    return [m for m, _ in rows]
 
 
 def suggest(topic: str, limit: int = 5):
@@ -198,11 +206,15 @@ def main():
     s = sub.add_parser("search", help="搜索历史公众号文章")
     s.add_argument("query")
     s.add_argument("-n", "--limit", type=int, default=8)
+    s.add_argument("--pillar", "--p", help="按内容支柱过滤，如 freedom/lifestyle/growth/reading/ai/geek")
+    s.add_argument("--type", "--t", help="按内容类型过滤，如 knowledge/experience/story/opinion/tutorial/review/list/reflection")
     a = sub.add_parser("suggest", help="根据历史内容生成选题与排期建议")
     a.add_argument("topic")
     a.add_argument("-n", "--limit", type=int, default=5)
     args = parser.parse_args()
-    {"index": index, "search": lambda: search(args.query, args.limit), "suggest": lambda: suggest(args.topic, args.limit)}[args.command]()
+    {"index": index,
+     "search": lambda: search(args.query, args.limit, args.pillar, args.type),
+     "suggest": lambda: suggest(args.topic, args.limit)}[args.command]()
 
 
 if __name__ == "__main__":
