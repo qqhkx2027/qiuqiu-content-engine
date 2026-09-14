@@ -52,7 +52,7 @@ for (let i = 0; i < tagStats.length; i++) for (let j = i+1; j < tagStats.length;
 tagPair.sort((x,y)=> y.score - x.score);
 tagPair.slice(0,6).forEach(p => opps.push({ level:'gap', name: p.a+' × '+p.b,
   title: '「'+p.a+'」×「'+p.b+'」几乎没结合过',
-  reason: p.a+' 有 '+p.ca+' 篇、'+p.b+' 有 '+p.cb+' 篇，但交叉仅 '+p.both+' 篇。写一篇结合文，可能成为代表作。' }));
+  reason: p.a+' 有 '+p.ca+' 篇、'+p.b+' 有 '+p.cb+' 篇，但交叉仅 '+p.both+' 篇。你在两个方向都有积累，却从未结合——这正是一片空白市场。建议用「以 '+p.b+' 为切口，讲 '+p.a+' 的真实场景」写一篇代表作。', }));
 // 3) 沉寂：历史多但近两年很少写
 tagStats.filter(t => t.count >= 18 && t.recent <= 4)
   .sort((a,b)=> a.recent - b.recent)
