@@ -199,10 +199,39 @@ def suggest(topic: str, limit: int = 5):
     print("- 周末：复盘数据，记录可继续发展的子选题")
 
 
+def catalog():
+    """盘点内容资产：按支柱/类型统计存量，帮内容生产看可复用资源。"""
+    from collections import Counter
+    col = collection()
+    metas = col.get(include=["metadatas"])["metadatas"]
+    p_c = Counter()
+    t_c = Counter()
+    n = 0
+    for m in metas:
+        for p in (m.get("pillars") or "").split(","):
+            if p:
+                p_c[p] += 1
+        ct = m.get("content_type") or ""
+        if ct:
+            t_c[ct] += 1
+        n += 1
+    PILLAR_NAME = {"freedom": "财务自由", "lifestyle": "生活方式", "growth": "自我成长", "reading": "读书", "ai": "AI与工具", "geek": "好物分享"}
+    TYPE_NAME = {"knowledge": "知识型", "experience": "经验型", "story": "故事型", "opinion": "观点型", "tutorial": "教程型", "review": "测评型", "list": "清单型", "reflection": "复盘型"}
+    print(f"=== 内容资产台账（{n} 篇）===\n")
+    print("[内容支柱分]")
+    for pid, cnt in p_c.most_common():
+        print(f"  {PILLAR_NAME.get(pid, pid)}: {cnt} 篇")
+    print("\n[内容类型分]")
+    for tid, cnt in t_c.most_common():
+        print(f"  {TYPE_NAME.get(tid, tid)}: {cnt} 篇")
+    print("\n提示：search 支持 --pillar 与 --type 过滤某个组合的内容，便于找材料复用。")
+
+
 def main():
     parser = argparse.ArgumentParser(description="qiuqiu-content-engine")
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("index", help="建立或更新本地向量索引")
+    sub.add_parser("catalog", help="盘点内容资产（按支柱/类型统计存量）")
     s = sub.add_parser("search", help="搜索历史公众号文章")
     s.add_argument("query")
     s.add_argument("-n", "--limit", type=int, default=8)
@@ -213,6 +242,7 @@ def main():
     a.add_argument("-n", "--limit", type=int, default=5)
     args = parser.parse_args()
     {"index": index,
+     "catalog": catalog,
      "search": lambda: search(args.query, args.limit, args.pillar, args.type),
      "suggest": lambda: suggest(args.topic, args.limit)}[args.command]()
 
