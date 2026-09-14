@@ -1,5 +1,12 @@
-// fetch_by_url.mjs — 按给定的 mp.weixin 链接逐个抓正文入库
-// 用法: node site/fetch_by_url.mjs "链接1" "链接2" ...
+// fetch_by_url.mjs — 按 mp.weixin.qq.com 链接逐个抓取单篇公众号文章并转 Markdown 入库
+// 场景：补抓历史 / 零星缺文（we-mp-rss 或官方直连没抓到、需手动补的篇目）
+// 用法:
+//   node site/fetch_by_url.mjs "https://mp.weixin.qq.com/s/xxx" ["https://mp.weixin.qq.com/s/yyy" ...]
+// 特性:
+//   - 标题取页面 <meta property="og:title">
+//   - 发布时间取页面 createTime（真实发布日，非抓取日）
+//   - 公众号归属由页面 data-nickname 判断，落到对应 ./content/公众号/<号名>/
+//   - 已自动剥离 <script>/<style>，避免把微信反爬 JS 混进正文
 import fs from 'node:fs';
 import path from 'node:path';
 
