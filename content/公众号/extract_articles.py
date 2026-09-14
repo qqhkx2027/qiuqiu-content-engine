@@ -116,6 +116,7 @@ def process_file(filepath, account_name, pillars, content_types):
     types_hit = classify_by_alias(content_types, haystack)
 
     return {
+        "id": f"qq-{date.replace('-', '') if date else 'nodate'}-{filename.split('-')[-1].replace('.md', '')}",
         "filename": filename,
         "account": account_name,
         "title": title,

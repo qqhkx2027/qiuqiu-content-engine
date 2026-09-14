@@ -31,4 +31,16 @@ assert_true("freedom" in hits, f"freedom 命中 {hits}")
 thits = ea.classify_by_alias(types, "教程 步骤")
 assert_true("tutorial" in thits, f"tutorial 命中 {thits}")
 
+print("id 生成:")
+import os as _os
+_tmpd = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "..", "content", "公众号", "《秋秋在分享》")
+_tmpp = _os.path.join(_tmpd, "20230101-test-article.md")
+with open(_tmpp, "w", encoding="utf-8") as _f:
+    _f.write("---\nname: 测试\n---\n正文")
+try:
+    art = ea.process_file(_tmpp, "秋秋在分享", [], [])
+    assert_true(art["id"].startswith("qq-20230101-"), f"id 格式 {art['id']}")
+finally:
+    _os.remove(_tmpp)
+
 print("\n全部通过 ✓")
