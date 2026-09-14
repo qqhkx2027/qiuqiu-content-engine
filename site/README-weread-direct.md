@@ -26,9 +26,9 @@
 ### 2. 把 Cookie 填入 GitHub Secret
 
 1. 用 Chrome 打开 https://weread.qq.com，微信扫码登录
-2. 按 F12 打开开发者工具 → Console 输入：
-   document.cookie
-3. 复制输出的 Cookie 字符串（wr_vid=...; wr_skey=... 开头的整段）
+2. 按 F12 打开开发者工具 → Application（应用）→ Cookies → weread.qq.com
+3. 逐个复制所有 Cookie 的 Name / Value，拼成 wr_vid=xxx; wr_skey=xxx; ... 形式
+   （注意：wr_skey 是 HttpOnly，Console 里 document.cookie 读不到，必须在 Application 面板里复制）
 4. 打开仓库 Settings → Secrets and variables → Actions → New repository secret
    - Name: WEREAD_COOKIE
    - Value: 粘贴刚复制的 Cookie（不要带引号，不要换行）

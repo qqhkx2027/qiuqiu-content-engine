@@ -27,6 +27,11 @@ async function getJson(url) {
       Accept: 'application/json, text/plain, */*'
     }
   });
+  if (r.status === 401) {
+    console.error('登录态无效（HTTP 401）。Cookie 必须包含 wr_vid 和 wr_skey 两个登录字段。');
+    console.error('获取方法：Chrome 打开 https://weread.qq.com 扫码登录 → F12 → Application → Cookies → weread.qq.com，展开每一行复制 Name=Value 拼成 "a=b; c=d" 格式，含 HttpOnly 的 wr_skey 也要复制。');
+    throw new Error('HTTP 401 (cookie invalid)');
+  }
   if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + url);
   return r.json();
 }
