@@ -6,5 +6,15 @@
     { "id": "reading", "name": "读书", "why": "读过的书，变成真正改变生活的东西", "aliases": ["读书", "书单推荐"] },
     { "id": "ai", "name": "AI 与工具", "why": "折腾工具，但最终还是为了让生活更简单", "aliases": ["AI"] },
     { "id": "geek", "name": "好物分享", "why": "少买一点，但每一样都真的喜欢", "aliases": ["好物", "好物推荐"] }
+  ],
+  "content_types": [
+    { "id": "knowledge", "name": "知识型", "aliases": ["知识", "科普", "原理", "底层逻辑"] },
+    { "id": "experience", "name": "经验型", "aliases": ["经验", "亲测", "实操", "真实体验"] },
+    { "id": "story", "name": "故事型", "aliases": ["故事", "日记", "见闻", "生活"] },
+    { "id": "opinion", "name": "观点型", "aliases": ["观点", "看法", "立场", "争论"] },
+    { "id": "tutorial", "name": "教程型", "aliases": ["教程", "步骤", "指南", "how-to"] },
+    { "id": "review", "name": "测评型", "aliases": ["测评", "评测", "开箱", "对比"] },
+    { "id": "list", "name": "清单型", "aliases": ["清单", "合集", "盘点", "Top"] },
+    { "id": "reflection", "name": "复盘型", "aliases": ["复盘", "反思", "总结", "一年"] }
   ]
 }
