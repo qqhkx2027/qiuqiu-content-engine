@@ -22,15 +22,17 @@ const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 const NOW = new Date();
 const Y = NOW.getFullYear(), M = NOW.getMonth() + 1;
 const monthsAgo = d => { const y = Number(d.slice(0,4)), m = Number(d.slice(5,7)); return (Y - y) * 12 + (M - m); };
-const tagCount = new Map(), tagRecent = new Map(), tagLatest = new Map();
+const tagCount = new Map(), tagRecent = new Map(), tagLatest = new Map(), tagFirst = new Map();
 for (const a of clean) for (const t of a.tags) {
   tagCount.set(t, (tagCount.get(t) || 0) + 1);
   if (monthsAgo(a.date) <= 24) tagRecent.set(t, (tagRecent.get(t) || 0) + 1);
   const lt = tagLatest.get(t);
   if (!lt || a.date > lt) tagLatest.set(t, a.date);
+  // label 首发年份：用于「多年后重写」机会
+  if (!tagFirst.has(t) || a.date < tagFirst.get(t)) tagFirst.set(t, a.date);
 }
 const tagStats = [...tagCount.entries()]
-  .map(([name, count]) => ({ name, count, recent: tagRecent.get(name) || 0, latest: tagLatest.get(name) || '' }))
+  .map(([name, count]) => ({ name, count, recent: tagRecent.get(name) || 0, latest: tagLatest.get(name) || '', first: tagFirst.get(name) || '' }))
   .filter(t => t.count >= 4);
 const opps = [];
 // 1) 强深耕（近2年活跃 + 历史厚）
@@ -65,7 +67,7 @@ tagStats.filter(t => t.count >= 4 && t.recent >= 5 && t.recent / t.count >= 0.75
   .forEach(t => opps.push({ level:'trend', name: t.name,
     title: '「'+t.name+'」正在悄悄上升',
     reason: '近两年 '+t.recent+' 篇，占历史 '+t.count+' 篇的 '+Math.round(t.recent/t.count*100)+'%。读者可能正在转向，值得做成有主题的栏目。' }));
-const levelOrder = { go: 0, gap: 1, trend: 2, revive: 3, type: 4 };
+const levelOrder = { go: 0, gap: 1, trend: 2, revive: 3, type: 4, evolve: 5 };
 // ---- 5) 内容类型缺口：某些内容类型写得少，可能是差异化机会 ----
 const TYPE_NAME = { knowledge:'知识深挖', experience:'经验干货', story:'故事分享', opinion:'观点输出', tutorial:'方法教程', review:'测评', list:'清单整理', reflection:'复盘反思' };
 const TYPE_BIAS = { list:'清单型内容少，容易做成高收藏「干货合集」', tutorial:'教程型内容少，步骤化内容可沉淀为可复制方法论', review:'测评型内容少，是种草/带货的强入口', opinion:'观点型内容少，立场鲜明更容易建立人设、引发讨论' };
@@ -78,6 +80,18 @@ const typeOpps = Object.keys(TYPE_BIAS)
     title: (typeCount[t]||0) + ' 篇「' + (TYPE_NAME[t]||t) + '」太少，是差异化空间',
     reason: (TYPE_BIAS[t]||'') + '。已有 '+ (typeCount[t]||0) +' 篇，可针对高频主题试试这类写法。' }));
 opps.push(...typeOpps);
+// ---- 6) 时间重写：同一主题跨度多年仍活跃，值得「多年后我怎么看」 ----
+const curY = Y;
+tagStats
+  .filter(t => t.count >= 8 && t.first && t.latest)
+  .map(t => { const span = curY - Number(t.first.slice(0,4)); return { ...t, span }; })
+  .filter(t => t.span >= 4)      // 写了 4 年以上
+  .filter(t => t.recent >= 2)    // 近期仍在写（不是沉寂）
+  .sort((a, b) => b.count - a.count)
+  .slice(0, 3)
+  .forEach(t => opps.push({ level:'evolve', name:'′'+t.name+'′ 时间重写',
+    title: '写过 '+t.span+' 年，值得来一篇「'+t.first.slice(0,4)+' 年 vs 现在」的重写',
+    reason:'「'+t.name+'」从 '+t.first.slice(0,4)+' 年写到 '+t.latest.slice(0,4)+' 年，共 '+t.count+' 篇。观点会有演化，用「当时的误区 → 现在更成熟的做法」写一篇回顾文，最有个人辨识度。' }));
 opps.sort((a,b)=> levelOrder[a.level]-levelOrder[b.level]);
 // ---- 内容地图 ----
 // TOPICS 单一真相来自 config/taxonomy.json 的 pillars（配置集中，不在脚本里重复）
@@ -113,7 +127,7 @@ const mapCards = topicStats.map(t => '<div class="tp"><h3>'+esc(t.name)+'</h3><d
 const maxCross = pairs.length ? Math.max(...pairs.map(p=>p.count)) : 1;
 const mapBody = '<h2 class="yhead">主题总览</h2><div class="dash">'+dashCards+'</div><h2 class="yhead">主题全景与代表内容</h2><div class="map-grid">'+mapCards+'</div><h2 class="yhead">主题交叉（已有内容）</h2><div class="map-grid">'+pairs.slice(0,6).map(p=>'<div class="tp"><h3>'+esc(p.t1+' × '+p.t2)+'</h3><div class="cnt">'+p.count+' 篇 · 最近 '+esc(p.latest)+'</div>'+bar(p.count,maxCross)+'</div>').join('')+'</div>';
 const mapHtml = page('内容地图','内容地图','502 篇文章的分布与交叉', mapBody);
-const oppBody = '<div class="legend"><span><i style="background:#4f8f5f"></i>建议深耕</span><span><i style="background:#5b8db8"></i>交叉机会</span><span><i style="background:#c2852f"></i>新兴上升</span><span><i style="background:#c25e4a"></i>沉寂主题</span><span><i style="background:#9b7ec9"></i>类型缺口</span></div><ol class="opp">'+opps.map((o,i)=>'<li class="'+o.level+'"><span class="badge">'+(i+1)+' · '+esc(o.name)+'</span><h4>'+esc(o.title)+'</h4><p>'+esc(o.reason)+'</p></li>').join('')+'</ol><div class="hint">规则：按全部文章的标签出现频率、近两年活跃度、标签交叉空白、内容类型分布自动计算。每次更新文章后运行 build_intel.mjs 即可刷新。</div>';
+const oppBody = '<div class="legend"><span><i style="background:#4f8f5f"></i>建议深耕</span><span><i style="background:#5b8db8"></i>交叉机会</span><span><i style="background:#c2852f"></i>新兴上升</span><span><i style="background:#c25e4a"></i>沉寂主题</span><span><i style="background:#9b7ec9"></i>类型缺口</span><span><i style="background:#c76f9e"></i>时间重写</span></div><ol class="opp">'+opps.map((o,i)=>'<li class="'+o.level+'"><span class="badge">'+(i+1)+' · '+esc(o.name)+'</span><h4>'+esc(o.title)+'</h4><p>'+esc(o.reason)+'</p></li>').join('')+'</ol><div class="hint">规则：按全部文章的标签出现频率、近两年活跃度、标签交叉空白、内容类型分布自动计算。每次更新文章后运行 build_intel.mjs 即可刷新。</div>';
 const oppHtml = page('选题机会','选题机会','从 502 篇历史里找「值得写但还没写」的切入点', oppBody);
 fs.writeFileSync(path.join(OUT,'map.html'), mapHtml);
 fs.writeFileSync(path.join(OUT,'opportunity.html'), oppHtml);
