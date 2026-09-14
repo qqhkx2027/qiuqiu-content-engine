@@ -11,7 +11,9 @@ const clean = RAW
     date: (a.date||'').slice(0,10),
     account: (a.account||'').trim(),
     tags: (Array.isArray(a.tags)?a.tags.map(t=>t.trim()).filter(Boolean):[]).map(t=>t.includes('/')?t.split('/').pop():t).slice(0,3),
-    source: a.source||''
+    source: a.source||'',
+    pillars: Array.isArray(a.pillars)?a.pillars.map(x=>x.charAt(0).toUpperCase()+x.slice(1)):[],
+    content_type: Array.isArray(a.content_type)?a.content_type[0]:''
   }))
   .filter(a => a.title && a.source)
   .sort((a,b)=> a.date < b.date ? 1 : -1);
