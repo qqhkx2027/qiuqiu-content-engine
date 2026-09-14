@@ -19,7 +19,9 @@ if (!ih.includes('ob-title')) {
   // 首页「今日值得写」：读 intel.json 展示 Top 3 选题（工作台式体验）
   try {
     const intel = JSON.parse(fs.readFileSync(path.join(OUT, 'intel.json'), 'utf8'));
-    const top = intel.opps.slice(0, 3);
+    // 今日值得写优先给「差异化」机会（交叉/类型缺口/时间重写），而非前三条深耕
+    const pri = ['gap','type','evolve','trend','revive'];
+    const top = [...intel.opps.sort((a,b)=> pri.indexOf(b.level)-pri.indexOf(a.level))].slice(0,3);
     const doRow = '<div class="ob-title">📌 今日值得写</div>' + top.map(o =>
       '<a class="ob-card" href="opportunity.html"><div class="ob-h">' + o.name + '</div><div class="ob-d">' + o.title + '</div></a>'
     ).join('');
