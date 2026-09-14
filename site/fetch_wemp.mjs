@@ -10,6 +10,27 @@ const USER = process.env.WEMP_USER || 'admin';
 const PASS = process.env.WEMP_PASS || 'admin123';
 const CONTENT = path.join(ROOT, 'content', '公众号');
 
+// 从微信原始页取真实发布时间：优先 createTime（字符串日期），fallback var ct 时间戳，最后用发布接口时间
+// ponytail: 每篇详情后额外一次 mp.weixin fetch。公众号文章一天几篇，可接受；量大再改并发/缓存。
+async function fetchRealDate(url, fallbackDate) {
+  try {
+    const ac = new AbortController();
+    const t = setTimeout(() => ac.abort(), 8000);
+    const r = await fetch(url, {
+      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' },
+      signal: ac.signal
+    });
+    clearTimeout(t);
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const h = await r.text();
+    const m1 = h.match(/createTime\s*=\s*["']([^"']+)["']/);
+    if (m1) return m1[1].slice(0, 10);
+    const m2 = h.match(/var ct\s*=\s*["']?([0-9]{7,12})/);
+    if (m2) return unixToDate(Number(m2[1]));
+  } catch (e) { /* fallback 到接口时间 */ }
+  return fallbackDate;
+}
+
 // mp_id -> 文件夹映射（feed.mp_name 判断）；未命中回退《秋秋在分享》
 function folderOf(mpId, mpName) {
   const n = String(mpName || '');
@@ -78,7 +99,8 @@ const unixToDate = (sec) => {
   for (const it of list) {
     const link = it.url || '';
     if (!/mp\.weixin\.qq\.com/.test(link) || known.has(link)) continue;
-    const date = unixToDate(it.publish_time);
+    // 用微信原始页里的 createTime 作真实发布时间；取不到再用接口时间（fallback）
+    const date = await fetchRealDate(link, unixToDate(it.publish_time));
     if (!date) continue;
     const title = String(it.title || '').trim();
     if (!title) continue;
