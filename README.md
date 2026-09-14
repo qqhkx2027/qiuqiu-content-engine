@@ -69,11 +69,13 @@ cd site && node build_all.mjs                # 构建到 docs/（可在任意目
 ```bash
 .venv/bin/python content_engine.py index                    # 建（或更新）索引
 .venv/bin/python content_engine.py search "当年为什么不上班" -n 8   # 语义搜索
+.venv/bin/python content_engine.py search "存钱方法" --pillar freedom --type tutorial  # 按主题+类型筛选
 .venv/bin/python content_engine.py suggest "退休生活月开销"         # 找历史 + 给新选题
 ```
 
-索引数据在 `data/chroma/`（`.gitignore`，不入库）。首次需 `.venv`：
-`python3 -m venv .venv && .venv/bin/pip install -r requirements.txt`
+- 每篇已自动打 `pillars`(内容支柱) / `content_type`(内容类型) 标签，search 可用 `--pillar`/`--type` 过滤。
+- 索引数据在 `data/chroma/`（`.gitignore`，不入库）。
+- 首次建环境：`python3 -m venv .venv && .venv/bin/pip install -r requirements.txt`
 
 ---
 
