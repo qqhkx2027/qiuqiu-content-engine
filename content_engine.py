@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import json
 import math
 import os
 import re
@@ -13,9 +14,10 @@ from urllib.parse import quote
 import chromadb
 import yaml
 
-VAULT = Path(__file__).resolve().parents[2]
-ARCHIVE = Path(__file__).resolve().parent / "content" / "公众号"
-DATA = Path(__file__).resolve().parent / "data"
+# 仓库根 = 本文件所在目录（content_engine.py 位于仓库根）
+ROOT = Path(__file__).resolve().parent
+ARCHIVE = ROOT / "content" / "公众号"
+DATA = ROOT / "data"
 COLLECTION = "qiuqiu-wechat"
 
 
@@ -74,7 +76,9 @@ def parse_note(path: Path):
         "description": description,
         "tags": [str(x) for x in tags],
         "published": published,
-        "path": str(path.relative_to(VAULT)),
+        "pillars": meta.get("pillars"),
+        "content_type": meta.get("content_type"),
+        "path": str(path.relative_to(ROOT)),
         "absolute_path": str(path),
         "text": searchable,
     }
@@ -100,11 +104,19 @@ def _h1(body):
 
 
 def obsidian_link(path: str):
-    return f"obsidian://open?path={quote(str((VAULT / path).resolve()))}"
+    return f"obsidian://open?path={quote(str((ROOT / path).resolve()))}"
 
 
 def index():
     notes = [parse_note(p) for p in sorted(ARCHIVE.rglob("*.md"))]
+    # 从 extract 产物补齐 pillars / content_type（这两个字段在 md 里没有，是 extract 打标出来的）
+    derived = load_derived_meta()
+    for n in notes:
+        # key 用文件名（extract 输出以 filename 记录）
+        d = derived.get(n["path"].split("/")[-1])
+        if d:
+            n["pillars"] = d["pillars"]
+            n["content_type"] = d["content_type"]
     try:
         client().delete_collection(COLLECTION)
     except Exception:
@@ -115,9 +127,34 @@ def index():
             ids=[n["path"] for n in notes],
             documents=[n["text"] for n in notes],
             embeddings=[vector(n["text"]) for n in notes],
-            metadatas=[{k: n[k] for k in ("title", "description", "published", "path", "absolute_path")} for n in notes],
+            metadatas=[serialize_meta(n) for n in notes],
         )
     print(f"已索引 {len(notes)} 篇文章，向量库：{DATA / 'chroma'}")
+
+
+def serialize_meta(n):
+    """chromadb metadata 只接受标量/字符串，list 序列化成逗号串。"""
+    def flat(v):
+        if isinstance(v, list):
+            return ",".join(map(str, v))
+        return v or ""
+    return {k: flat(n[k]) for k in ("title", "description", "published", "pillars", "content_type", "path", "absolute_path")}
+
+
+def load_derived_meta():
+    """从 extract_articles.py 的输出读取每篇的 pillars/content_type（按 path 映射）。"""
+    try:
+        with open(ARCHIVE / "outputs" / "articles_data.json", encoding="utf-8") as f:
+            rows = json.load(f)
+    except Exception:
+        return {}
+    out = {}
+    for r in rows:
+        out[r.get("path_rel") or r.get("filename")] = {
+            "pillars": r.get("pillars") or [],
+            "content_type": (r.get("content_type") or [None])[0] if isinstance(r.get("content_type"), list) else r.get("content_type"),
+        }
+    return out
 
 
 def search(query: str, limit: int = 8):
