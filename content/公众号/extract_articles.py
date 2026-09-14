@@ -111,7 +111,8 @@ def process_file(filepath, account_name, pillars, content_types):
     source = meta.get("source", "")
 
     # 用 taxonomy 别名自动打标（不改原文件）
-    haystack = " ".join([title, description, " ".join(map(str, tags))])
+    # haystack = 标题 + 描述 + tags + 正文前400字（保证无 tags 的手动抓取文章也能识别主题）
+    haystack = " ".join([title, description, " ".join(map(str, tags)), clean_text[:400]])
     pillars_hit = classify_by_alias(pillars, haystack)
     types_hit = classify_by_alias(content_types, haystack)
 
