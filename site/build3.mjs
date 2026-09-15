@@ -111,8 +111,17 @@ for (let i = 0; i < clean.length; i++) {
 }
 fs.writeFileSync(path.join(OUT, 'urls.json'), JSON.stringify(clean.map(a => ({ filename: a.filename, url: a._url }))));
 
-const yearSections = years.map(y => `<h2 class="year-head">${y} 年 · ${byYear[y].length} 篇</h2><div class="grid">${byYear[y].map(card).join('')}</div>`).join('');
-fs.writeFileSync(path.join(OUT, 'index.html'), page('秋秋的个人网站', hero() + yearSections));
+const recentCards = clean.slice(0, 12).map(card).join('');
+const portalCards = [
+  ['map.html','🗺️','内容地图','看看这些年我到底写了什么主题'],
+  ['timeline.html','📅','时间线','从 2018 到 2026 的内容演化'],
+  ['opportunity.html','💡','选题机会','我还没写透的几个问题'],
+  ['workbench.html','🎯','选题工作台','今天值得写什么 · 内容配比'],
+  ['potential.html','🔄','多平台改写','把好文章改到别的平台'],
+  ['archive.html','📚','全部文章','全部篇存档'],
+].map(([href,ic,title,desc]) => `<a class="portal" href="${href}"><div class="p-ic">${ic}</div><div class="p-txt"><div class="p-h">${title}</div><div class="p-d">${desc}</div></div></a>`).join('');
+const recentSection = `<h2 class="year-head">最新发表</h2><div class="grid">${recentCards}</div><div style="text-align:center;margin:26px 0 40px"><a class="btn outline" href="archive.html">查看全部文章 →</a></div>`;
+fs.writeFileSync(path.join(OUT, 'index.html'), page('秋秋的个人网站', hero() + `<div class="portal-grid">${portalCards}</div>` + recentSection));
 fs.writeFileSync(path.join(OUT, 'archive.html'), page('全部文章 · ' + SITE_NAME, hero() + '<div class="grid">' + clean.map(card).join('') + '</div>'));
 fs.writeFileSync(path.join(OUT, 'about.html'), page('关于 · ' + SITE_NAME, '<div class="hero"><h1>关于</h1><p class="tagline">这里是秋秋。公众号「秋秋很开心」「秋秋在分享」，用文字记录学习、读书、旅行和日子。</p></div>'));
 

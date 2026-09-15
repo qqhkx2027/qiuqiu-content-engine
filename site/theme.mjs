@@ -48,7 +48,7 @@ nav a.nav-hl{color:var(--terracotta);font-weight:800;border-bottom:2px solid var
 .btn.outline{background:transparent;border:2px solid var(--green-deep);color:var(--green-deep);box-shadow:none}
 .btn.outline:hover{background:rgba(91,127,99,.08)}
 
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px;padding:10px 0 64px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px;padding:10px 0 64px}.portal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin:8px 0 6px}.portal{display:flex;gap:14px;align-items:center;background:var(--paper);border:1.5px solid var(--line);border-radius:18px 10px 18px 10px;padding:15px 18px;transition:.16s}.portal:hover{transform:translateY(-3px);border-color:var(--green);box-shadow:var(--shadow)}.p-ic{font-size:24px;line-height:1}.p-h{font-size:15px;font-weight:800;color:var(--green-deep)}.p-d{font-size:12.5px;color:var(--brown);margin-top:2px}
 .card{background:var(--paper);border:1.5px solid var(--line);border-radius:20px 12px 20px 12px;padding:20px 22px;display:block;position:relative;overflow:hidden;transition:.18s;box-shadow:0 4px 12px rgba(90,100,70,.08)}
 .card:before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--terracotta),var(--yellow),var(--green),#6f8ba5);opacity:.8}
 .card:hover{transform:translateY(-5px) rotate(-.4deg);box-shadow:0 14px 32px rgba(90,100,70,.16)}
