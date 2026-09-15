@@ -121,7 +121,8 @@ const portalCards = [
   ['archive.html','📚','全部文章','全部篇存档'],
 ].map(([href,ic,title,desc]) => `<a class="portal" href="${href}"><div class="p-ic">${ic}</div><div class="p-txt"><div class="p-h">${title}</div><div class="p-d">${desc}</div></div></a>`).join('');
 const recentSection = `<h2 class="year-head">最新发表</h2><div class="grid">${recentCards}</div><div style="text-align:center;margin:26px 0 40px"><a class="btn outline" href="archive.html">查看全部文章 →</a></div>`;
-fs.writeFileSync(path.join(OUT, 'index.html'), page('秋秋的个人网站', hero() + `<div class="portal-grid">${portalCards}</div>` + recentSection));
+const idxHtml = page('秋秋的个人网站', hero() + `<div class="portal-grid">${portalCards}</div>` + recentSection);
+fs.writeFileSync(path.join(OUT, 'index.html'), idxHtml.replace('</style>', '<style>.portal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin:8px 0 6px}.portal{display:flex;gap:14px;align-items:center;background:var(--paper);border:1.5px solid var(--line);border-radius:18px 10px 18px 10px;padding:15px 18px;transition:.25s}.portal:hover{transform:translateY(-3px);border-color:var(--green);box-shadow:var(--shadow)}.p-ic{font-size:24px;line-height:1}.p-h{font-size:15px;font-weight:800;color:var(--green-deep)}.p-d{font-size:12.5px;color:var(--brown);margin-top:2px}</style>'));
 fs.writeFileSync(path.join(OUT, 'archive.html'), page('全部文章 · ' + SITE_NAME, hero() + '<div class="grid">' + clean.map(card).join('') + '</div>'));
 fs.writeFileSync(path.join(OUT, 'about.html'), page('关于 · ' + SITE_NAME, '<div class="hero"><h1>关于</h1><p class="tagline">这里是秋秋。公众号「秋秋很开心」「秋秋在分享」，用文字记录学习、读书、旅行和日子。</p></div>'));
 
