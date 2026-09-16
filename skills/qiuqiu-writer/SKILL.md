@@ -1,5 +1,5 @@
 ---
-name: wsj-qiuqiu-content
+name: qiuqiu-writer
 description: 公众号内容创作：当用户要求给「秋秋很开心」(妻视角) 或「思吉」(个人号) 写公众号内容时使用——覆盖选题、初稿、humanizer 去 AI 痕、实拍配图、md2wechat 发布全流程。秋秋起草→老婆润色，用户幕后不出台前。
 version: 2.0.0
 author: siji
