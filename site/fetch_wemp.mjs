@@ -23,10 +23,17 @@ async function fetchRealDate(url, fallbackDate) {
     clearTimeout(t);
     if (!r.ok) throw new Error('HTTP ' + r.status);
     const h = await r.text();
-    const m1 = h.match(/createTime\s*=\s*["']([^"']+)["']/);
+    // 微信发布时间的多种真实格式（按优先级）：
+    //   create_time: '2026-09-18 12:36'
+    //   createTime = "2026-09-18 12:36"
+    //   ct = '1789706202'  （裸 ct，无 var 前缀）
+    //   createTime = '1789706202'
+    let m1 = h.match(/create_time\s*:\s*["']([0-9]{4}-\d{2}-\d{2}[^"']*)["']/);
     if (m1) return m1[1].slice(0, 10);
-    const m2 = h.match(/var ct\s*=\s*["']?([0-9]{7,12})/);
-    if (m2) return unixToDate(Number(m2[1]));
+    m1 = h.match(/createTime\s*=\s*["']([0-9]{4}-\d{2}-\d{2}[^"']*)["']/);
+    if (m1) return m1[1].slice(0, 10);
+    const mct = h.match(/createTime\s*=\s*['"]?([0-9]{7,12})['"]?/) || h.match(/ct\s*=\s*['"]?([0-9]{7,12})['"]/);
+    if (mct) return unixToDate(Number(mct[1]));
   } catch (e) { /* fallback 到接口时间 */ }
   return fallbackDate;
 }

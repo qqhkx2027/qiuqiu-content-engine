@@ -46,10 +46,16 @@ async function fetchRealDate(url) {
     const r = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' } });
     if (!r.ok) throw new Error('HTTP ' + r.status);
     const h = await r.text();
-    const m1 = h.match(/createTime\s*=\s*["']([^"']+)["']/);
-    if (m1) return { date: m1[1].slice(0, 10), html: h };
-    const m2 = h.match(/var ct\s*=\s*["']?([0-9]{7,12})/);
-    if (m2) { const d = new Date(Number(m2[1]) * 1000); return { date: `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`, html: h }; }
+    // 微信发布时间的多种真实格式（按优先级）：
+    //   create_time: '2026-09-18 12:36'
+    //   createTime = "2026-09-18 12:36"
+    //   ct = '1789706202'  （裸 ct，无 var 前缀）
+    let dm1 = h.match(/create_time\s*:\s*["']([0-9]{4}-\d{2}-\d{2}[^"']*)["']/);
+    if (dm1) return { date: dm1[1].slice(0, 10), html: h };
+    dm1 = h.match(/createTime\s*=\s*["']([0-9]{4}-\d{2}-\d{2}[^"']*)["']/);
+    if (dm1) return { date: dm1[1].slice(0, 10), html: h };
+    const dct = h.match(/createTime\s*=\s*["']?([0-9]{7,12})["']?/) || h.match(/ct\s*=\s*['"]?([0-9]{7,12})['"]/);
+    if (dct) { const d = new Date(Number(dct[1]) * 1000); return { date: `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`, html: h }; }
     return { date: null, html: h };
   } catch (e) { return { date: null, html: '' }; }
 }
