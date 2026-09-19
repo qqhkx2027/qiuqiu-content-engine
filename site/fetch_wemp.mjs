@@ -106,7 +106,7 @@ const unixToDate = (sec) => {
     if (!title) continue;
 
     // 3. 取正文
-    const detail = await getJson(ORIGIN + '/api/v1/wx/articles/' + it.id, token);
+    const detail = await getJson(ORIGIN + '/api/v1/wx/articles/' + it.id + '?content=true', token);
     const html = detail.data?.content || '';
     const bodyMd = htmlToMd(html);
     if (!bodyMd) { console.log('跳过(无正文):', link); continue; }
